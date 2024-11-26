@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 import { workflowStatus } from '@/type/workflow';
-import { workflow } from '@prisma/client';
+import { Workflow } from '@prisma/client';
 import {
   FileTextIcon,
   MoreVerticalIcon,
@@ -29,7 +29,7 @@ const statusColor = {
   [workflowStatus.PUBLISHED]: 'bg-primary',
 };
 
-const WorkflowCard = ({ workflow }: { workflow: workflow }) => {
+const WorkflowCard = ({ workflow }: { workflow: Workflow }) => {
   const isDraft = workflow.status === workflowStatus.DRAFT;
   return (
     <Card className='border border-separate shadow-md rounded-lg overflow-hidden hover:shadow-md dark:shadow-primary/30'>

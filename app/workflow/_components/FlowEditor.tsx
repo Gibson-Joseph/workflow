@@ -1,5 +1,5 @@
 'use client';
-import { workflow } from '@prisma/client';
+import { Workflow } from '@prisma/client';
 import {
   addEdge,
   Background,
@@ -23,7 +23,7 @@ import DeletableEdge from './edges/DeletableEdge';
 import { TaskRegistry } from '@/lib/workflow/task/registry';
 
 interface FlowEditorProps {
-  workflow: workflow;
+  workflow: Workflow;
 }
 
 const nodeTypes = {

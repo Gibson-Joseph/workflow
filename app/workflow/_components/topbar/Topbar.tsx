@@ -5,14 +5,21 @@ import { ChevronLeftIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import SaveBtn from './SaveBtn';
+import ExecuteBtn from './ExecuteBtn';
 
 interface ToperProps {
   title: string;
   subTitle?: string;
   workflowId: string;
+  hideButtons?: boolean;
 }
 
-export default function Topbar({ title, subTitle, workflowId }: ToperProps) {
+export default function Topbar({
+  title,
+  subTitle,
+  workflowId,
+  hideButtons = false,
+}: ToperProps) {
   const router = useRouter();
   return (
     <header
@@ -35,7 +42,12 @@ justify-between w-full h-[60px] sticky top-0 bg-background z-10'
         </div>
       </div>
       <div className='flex gap-1 flex-1 justify-end'>
-        <SaveBtn workflowId={workflowId} />
+        {hideButtons === false && (
+          <>
+            <ExecuteBtn workflowId={workflowId} />
+            <SaveBtn workflowId={workflowId} />
+          </>
+        )}
       </div>
     </header>
   );
