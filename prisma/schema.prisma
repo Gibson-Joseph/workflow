@@ -11,32 +11,39 @@ datasource db {
 }
 
 model Workflow {
-  id          String              @id @default(cuid())
+  id          String  @id @default(cuid())
   userId      String
   name        String
   description String?
   definition  String
-  status      String
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
-  execution   WorkflowExecution[]
+  status      String // DRAFT | PUBLISHED
+
+  lastRunAt     DateTime?
+  lastRunId     String?
+  lastRunStatus String?
+
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  execution WorkflowExecution[]
 
   // User can not have two workflow with same name
   @@unique([name, userId])
 }
 
 model WorkflowExecution {
-  id          String    @id @default(cuid())
-  workflowId  String
-  userId      String
-  trigger     String
-  status      String
-  createAt    DateTime  @default(now())
-  startedAt   DateTime?
-  completedAt DateTime?
+  id              String    @id @default(cuid())
+  workflowId      String
+  userId          String
+  trigger         String
+  status          String
+  createAt        DateTime  @default(now())
+  startedAt       DateTime?
+  completedAt     DateTime?
+  creditsConsumed Int       @default(0)
+  definition      String    @default("{}")
 
   workflow Workflow         @relation(fields: [workflowId], references: [id], onDelete: Cascade)
-  phase    ExecutionPhase[]
+  phases   ExecutionPhase[]
 }
 
 model ExecutionPhase {
@@ -51,7 +58,7 @@ model ExecutionPhase {
   inputs      String?
   outputs     String?
 
-  creditsConsumed         Int?
+  creditsConsumed     Int?
   workflowExecutionId String
   execution           WorkflowExecution @relation(fields: [workflowExecutionId], references: [id], onDelete: Cascade)
 }

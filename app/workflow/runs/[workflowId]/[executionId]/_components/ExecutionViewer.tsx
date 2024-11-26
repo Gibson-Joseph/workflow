@@ -43,7 +43,7 @@ const ExecutionViewer = ({ initialData }: { initialData: ExecutionData }) => {
     query.data?.completedAt,
     query.data?.startedAt
   );
-  const creditsConsumed = GetPhasesTotalCose(query.data?.phase || []);
+  const creditsConsumed = GetPhasesTotalCose(query.data?.phases || []);
   return (
     <div className='flex w-full h-full'>
       <aside className='w-[400px] min-w-[440px] max-w-[440px] border-r-2 border-separate flex flex-grow flex-col overflow-hidden'>
@@ -95,7 +95,7 @@ const ExecutionViewer = ({ initialData }: { initialData: ExecutionData }) => {
         </div>
         <Separator />
         <div className='overflow-auto h-full px-2 py-4'>
-          {query.data?.phase.map((phase, index) => (
+          {query.data?.phases.map((phase, index) => (
             <Button
               key={index}
               className='w-full justify-between'
