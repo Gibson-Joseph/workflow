@@ -15,7 +15,7 @@ export async function GetWorkflowExecutionWithPhases(executionId: string) {
       userId,
     },
     include: {
-      phase: {
+      phases: {
         orderBy: {
           number: 'asc',
         },
