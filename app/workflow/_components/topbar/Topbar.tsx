@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import SaveBtn from './SaveBtn';
 import ExecuteBtn from './ExecuteBtn';
+import NavigationTabs from './NavigationTabs';
 
 interface ToperProps {
   title: string;
@@ -41,6 +42,7 @@ justify-between w-full h-[60px] sticky top-0 bg-background z-10'
           )}
         </div>
       </div>
+      <NavigationTabs workflowId={workflowId}/>
       <div className='flex gap-1 flex-1 justify-end'>
         {hideButtons === false && (
           <>
