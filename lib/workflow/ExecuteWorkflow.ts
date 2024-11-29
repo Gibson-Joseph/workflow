@@ -2,7 +2,6 @@ import 'server-only';
 import prisma from '../prisma';
 import { revalidatePath } from 'next/cache';
 import { ExecutionPhaseStatus, WorkflowExecutionStatus } from '@/type/workflow';
-import { waitFor } from '../helper/waitFor';
 import { ExecutionPhase } from '@prisma/client';
 import { AppNode } from '@/type/appNode';
 import { TaskRegistry } from './task/registry';
@@ -14,7 +13,7 @@ import { Edge } from '@xyflow/react';
 import { LogCollector } from '@/type/log';
 import { createLogCollector } from '../log';
 
-export async function ExecuteWorkflow(executationId: string) {
+export async function ExecuteWorkflow(executationId: string, nextRunAt?: Date) {
   const executation = await prisma.workflowExecution.findUnique({
     where: { id: executationId },
     include: {
@@ -45,7 +44,11 @@ export async function ExecuteWorkflow(executationId: string) {
   };
 
   // TODO: initialize workflow execution
-  await initializeWorkflowExecution(executationId, executation.workflowId);
+  await initializeWorkflowExecution(
+    executationId,
+    executation.workflowId,
+    nextRunAt
+  );
 
   // TODO: initialize phase status
   await initializePhaseStatuses(executation);
@@ -84,7 +87,8 @@ export async function ExecuteWorkflow(executationId: string) {
 
 async function initializeWorkflowExecution(
   executationId: string,
-  workflowId: string
+  workflowId: string,
+  nextRunAt?: Date
 ) {
   await prisma.workflowExecution.update({
     where: {
@@ -104,6 +108,7 @@ async function initializeWorkflowExecution(
       lastRunAt: new Date(),
       lastRunStatus: WorkflowExecutionStatus.RUNNING,
       lastRunId: executationId,
+      ...(nextRunAt && { nextRunAt }),
     },
   });
 }
