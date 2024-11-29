@@ -21,6 +21,16 @@ export const ExtractTextFromElementTask = {
       name: 'Selector',
       type: TaskParamType.STRING,
       required: true,
+      options: [
+        {
+          label: 'Visible',
+          value: 'visible',
+        },
+        {
+          label: 'Hidden',
+          value: 'hidden',
+        },
+      ],
     },
   ] as const,
   outputs: [
