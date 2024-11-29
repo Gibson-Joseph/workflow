@@ -14,6 +14,7 @@ interface ToolTipWrapperProps {
 }
 
 const ToolTipWrapper = ({ children, content, side }: ToolTipWrapperProps) => {
+  if (!content) return children;
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
