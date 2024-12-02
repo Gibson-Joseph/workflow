@@ -54,7 +54,7 @@ const ExecutionViewer = ({ initialData }: { initialData: ExecutionData }) => {
       q.state.data?.status === WorkflowExecutionStatus.RUNNING ? 1000 : false,
   });
   const phaseDetails = useQuery({
-    queryKey: ['phaseDeails', selectedPhase],
+    queryKey: ['phaseDeails', selectedPhase, query.data?.status],
     enabled: selectedPhase !== null,
     queryFn: () => GetWorkflowPhasesDetails(selectedPhase!),
   });
