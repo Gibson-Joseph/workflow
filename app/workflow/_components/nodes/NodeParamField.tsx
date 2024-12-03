@@ -6,6 +6,10 @@ import { useReactFlow } from '@xyflow/react';
 import { AppNode } from '@/type/appNode';
 import BrowserInstanceParam from './param/BrowserInstanceParam';
 import SelectParam from './param/SelectParam';
+import ButtonParam from './param/ButtonParam';
+import ImageParam from './param/ImageParam';
+import OrderInfoParam from './param/OrderInfoParam';
+import AgentProcessingParam from './param/AgentProcessingParam';
 
 const NodeParamField = ({
   param,
@@ -19,16 +23,26 @@ const NodeParamField = ({
   const { updateNodeData, getNode } = useReactFlow();
   const node = getNode(nodeId) as AppNode;
 
-  const value = node?.data?.inputs?.[param.name];
+  // const value = node?.data?.inputs?.[param.name];
+  const value = '';
 
   const updateNodeParamValue = useCallback(
-    (newValue: string) => {
-      updateNodeData(nodeId, {
-        inputs: {
-          ...node.data.inputs,
-          [param.name]: newValue,
-        },
-      });
+    (newValue: string, valueType: TaskParamType) => {
+      const updatedInputs = node.data.inputs.map((input) =>
+        input.name === param.name
+          ? { ...input, value: newValue, type: valueType }
+          : input
+      );
+
+      // If the param doesn't exist, add it.
+      const inputs = updatedInputs.some((input) => input.name === param.name)
+        ? updatedInputs
+        : [
+            ...updatedInputs,
+            { value: newValue, type: valueType, name: param.name },
+          ];
+
+      updateNodeData(nodeId, { inputs });
     },
     [node?.data?.inputs, nodeId, param.name, updateNodeData]
   );
@@ -54,6 +68,42 @@ const NodeParamField = ({
     case TaskParamType.SELECT:
       return (
         <SelectParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
+        />
+      );
+    case TaskParamType.BUTTON:
+      return (
+        <ButtonParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
+        />
+      );
+    case TaskParamType.IMAGE:
+      return (
+        <ImageParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
+        />
+      );
+    case TaskParamType.ORDER_INFO:
+      return (
+        <OrderInfoParam
+          param={param}
+          value={value}
+          updateNodeParamValue={updateNodeParamValue}
+          disabled={disabled}
+        />
+      );
+    case TaskParamType.AGENT_PROCESSING:
+      return (
+        <AgentProcessingParam
           param={param}
           value={value}
           updateNodeParamValue={updateNodeParamValue}

@@ -1,0 +1,75 @@
+{
+  "nodes": [
+    {
+      "id": "d7482bba-3980-4705-b8f3-0c54308d09e4",
+      "type": "FlowScrapeNode",
+      "dragHandle": ".drag-handle",
+      "data": {
+        "type": "INITAL_MESSAGE",
+        "inputs": {
+          "message": "Welcome to our shop! What would you like to do?",
+          "view_order": { "value": "view_order", "type": "BUTTON" },
+          "Image": {
+            "value": "https://cdn.shopify.com/b/shopify-brochure2-assets/1b1f811b810037a7ca35b0b191306c18.jpg",
+            "type": "IMAGE"
+          }
+        }
+      },
+      "position": { "x": 0, "y": 0 },
+      "measured": { "width": 420, "height": 546 },
+      "selected": false
+    },
+    {
+      "id": "64f76f31-3a2f-4a73-a71c-cd557623fb4b",
+      "type": "FlowScrapeNode",
+      "dragHandle": ".drag-handle",
+      "data": {
+        "type": "ORDER_DETAIL",
+        "inputs": {
+          "Order info": {
+            "value": "{\"name\":\"orderInfo\",\"label\":\"Order Information\",\"dataType\":\"object\",\"description\":\"Contains details about the order.\"}",
+            "type": "ORDER_INFO"
+          }
+        }
+      },
+      "position": { "x": 750, "y": 600 },
+      "measured": { "width": 420, "height": 218 },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "7fae7371-865e-4abb-af55-b3eeb5a0cc41",
+      "type": "FlowScrapeNode",
+      "dragHandle": ".drag-handle",
+      "data": {
+        "type": "AGENT_REQUEST",
+        "inputs": {
+          "Contact Support": { "value": "contact_support", "type": "BUTTON" }
+        }
+      },
+      "position": { "x": 800, "y": 0 },
+      "measured": { "width": 420, "height": 380 },
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "d7482bba-3980-4705-b8f3-0c54308d09e4",
+      "sourceHandle": "view_order",
+      "target": "64f76f31-3a2f-4a73-a71c-cd557623fb4b",
+      "targetHandle": "Order info",
+      "animated": true,
+      "id": "xy-edge__d7482bba-3980-4705-b8f3-0c54308d09e4view_order-64f76f31-3a2f-4a73-a71c-cd557623fb4bOrder info"
+    },
+    {
+      "source": "d7482bba-3980-4705-b8f3-0c54308d09e4",
+      "sourceHandle": "request_agent",
+      "target": "7fae7371-865e-4abb-af55-b3eeb5a0cc41",
+      "targetHandle": "Processing Agent Request",
+      "animated": true,
+      "id": "xy-edge__d7482bba-3980-4705-b8f3-0c54308d09e4request_agent-7fae7371-865e-4abb-af55-b3eeb5a0cc41Processing Agent Request"
+    }
+  ],
+  "viewport": { "x": -489, "y": -85, "zoom": 1 }
+}

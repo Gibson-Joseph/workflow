@@ -12,6 +12,7 @@ const DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
 const NodeComponent = memo(({ id, selected, data }: NodeProps) => {
   const nodeData = data as AppNodeData;
   const task = TaskRegistry[nodeData.type];
+  console.log('task', task);
 
   return (
     <NodeCard nodeId={id} isSelected={!!selected}>
@@ -25,7 +26,7 @@ const NodeComponent = memo(({ id, selected, data }: NodeProps) => {
 
       <NodeOutputs>
         {task.outputs.map((output) => {
-          return <NodeOutput key={output?.name} output={output} />;
+          return <NodeOutput key={output?.name} output={output} nodeId={id} />;
         })}
       </NodeOutputs>
     </NodeCard>

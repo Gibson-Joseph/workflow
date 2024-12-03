@@ -80,21 +80,57 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
     [screenToFlowPosition, setNodes]
   );
 
+  // const onConnect = useCallback(
+  //   (connection: Connection) => {
+  //     setEdges((eds) => addEdge({ ...connection, animated: true }, eds));
+  //     if (!connection.targetHandle) return;
+  //     // Remove input if is present on connection
+  //     const node = nodes.find((nd) => nd.id === connection.target);
+
+  //     if (!node) return;
+  //     const nodeInputs = node.data.inputs;
+
+  //   // updateNodeData(node.id, {
+  //     //   inputs: {
+  //     //     ...nodeInputs,
+  //     //     targetNode: '',
+  //     //   },
+  //     // });
+  //   },
+  //   [setEdges, updateNodeData, nodes]
+  // );
+
   const onConnect = useCallback(
     (connection: Connection) => {
-      setEdges((eds) => addEdge({ ...connection, animated: true }, eds));
-      if (!connection.targetHandle) return;
-      // Remove input if is present on connection
-      const node = nodes.find((nd) => nd.id === connection.target);
+      console.log('Connection established:', connection);
 
-      if (!node) return;
-      const nodeInputs = node.data.inputs;
+      setEdges((eds) => {
+        const newEdges = addEdge({ ...connection, animated: true }, eds);
+        return newEdges;
+      });
 
-      updateNodeData(node.id, {
-        inputs: {
-          ...nodeInputs,
-          [connection.targetHandle]: '',
-        },
+      if (!connection.targetHandle || !connection.sourceHandle) {
+        return;
+      }
+
+      // Find the source node
+      const sourceNode = nodes.find((nd) => nd.id === connection.source);
+
+      if (!sourceNode) {
+        return;
+      }
+
+      // Update the source node's inputs
+      const updatedInputs = sourceNode.data.inputs.map((input) => {
+        if (input.name === connection.sourceHandle) {
+          return { ...input, targetNode: connection.target };
+        }
+        return input;
+      });
+
+      updateNodeData(sourceNode.id, {
+        ...sourceNode.data,
+        inputs: updatedInputs,
       });
     },
     [setEdges, updateNodeData, nodes]
@@ -159,7 +195,7 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
         onDragOver={onDragOver}
         onDrop={onDrop}
         onConnect={onConnect}
-        isValidConnection={isValidConnection}
+        // isValidConnection={isValidConnection}
       >
         <Controls position='top-left' fitViewOptions={fitViewOptions} />
         <Background variant={BackgroundVariant.Dots} gap={12} size={1} />

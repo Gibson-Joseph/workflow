@@ -67,6 +67,18 @@ export async function RunWorkflow(form: {
     executionPlan = result.executionPlan;
   }
 
+  console.log(
+    '******* execution plan *******',
+    JSON.stringify(executionPlan, null, 4)
+  );
+
+  await prisma.workflowExecution.deleteMany({
+    where: {
+      workflowId: workflowId,
+      userId,
+    },
+  });
+
   const execution = await prisma.workflowExecution.create({
     data: {
       workflowId,
@@ -84,6 +96,9 @@ export async function RunWorkflow(form: {
               number: phase.phase,
               node: JSON.stringify(node),
               name: TaskRegistry[node.data.type].label,
+              inputs: JSON.stringify(node.data.inputs),
+              nodeType: node.data.type,
+              nodeId: node.id,
             };
           });
         }),
@@ -99,6 +114,6 @@ export async function RunWorkflow(form: {
     throw new Error('workflow execution not created');
   }
 
-  ExecuteWorkflow(execution.id); // run this on background
-  redirect(`/workflow/runs/${workflowId}/${execution.id}`);
+  // ExecuteWorkflow(execution.id); // run this on background
+  // redirect(`/workflow/runs/${workflowId}/${execution.id}`);
 }

@@ -26,7 +26,7 @@ const SelectParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
         {param.required && <p className='text-red-400 px-2'>*</p>}
       </Label>
       <Select
-        onValueChange={(value) => updateNodeParamValue(value)}
+        onValueChange={(value) => updateNodeParamValue(value, param.type)}
         value={value}
       >
         <SelectTrigger className='w-full'>

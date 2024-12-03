@@ -234,15 +234,15 @@ async function finalizePhase(
       completedAt: new Date(),
       outputs: JSON.stringify(outputs),
       creditsConsumed,
-      logs: {
-        createMany: {
-          data: logCollector.getAll().map((log) => ({
-            message: log.message,
-            logLevel: log.level,
-            timestamp: log.timestamp,
-          })),
-        },
-      },
+      // logs: {
+      //   createMany: {
+      //     data: logCollector.getAll().map((log) => ({
+      //       message: log.message,
+      //       logLevel: log.level,
+      //       timestamp: log.timestamp,
+      //     })),
+      //   },
+      // },
     },
   });
 }
@@ -276,7 +276,11 @@ function setupEnvironmentForPhase(
   const inputs = TaskRegistry[node.data.type].inputs;
   for (const input of inputs) {
     if (input.type === TaskParamType.BROWSER_INSTANCE) continue;
-    const inputValue = node.data.inputs[input.name];
+    // const inputValue = node.data.inputs[input.name];
+    const inputValue =
+      node.data.inputs.find((nodeInput) => nodeInput.name === input.name)
+        ?.value || '';
+
     if (inputValue) {
       environment.phases[node.id].inputs[input.name] = inputValue;
       continue;

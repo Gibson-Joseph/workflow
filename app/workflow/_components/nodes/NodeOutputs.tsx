@@ -5,15 +5,23 @@ import { TaskParam, TaskType } from '@/type/task';
 import { Handle, Position } from '@xyflow/react';
 import { ReactNode } from 'react';
 import { colorForHanlde } from './common';
+import NodeParamField from './NodeParamField';
 
 export function NodeOutputs({ children }: { children: ReactNode }) {
   return <div className='flex flex-col divide-y gap-1'>{children}</div>;
 }
 
-export function NodeOutput({ output }: { output: TaskParam }) {
+export function NodeOutput({
+  output,
+  nodeId,
+}: {
+  output: TaskParam;
+  nodeId: string;
+}) {
   return (
     <div className='flex justify-end relative p-3 bg-secondary'>
-      <p className='text-xs text-muted-foreground'>{output.name}</p>
+      {/* <p className='text-xs text-muted-foreground'>{output.name}</p> */}
+      <NodeParamField param={output} nodeId={nodeId} disabled={false} />
       <Handle
         id={output.name}
         type='source'

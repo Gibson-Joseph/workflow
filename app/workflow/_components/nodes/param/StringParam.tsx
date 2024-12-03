@@ -35,7 +35,7 @@ const StringParam = ({
         value={internelValue}
         onChange={(e: any) => setInternelValue(e.target.value)}
         placeholder='Enter value here'
-        onBlur={(e: any) => updateNodeParamValue(e.target.value)}
+        onBlur={(e: any) => updateNodeParamValue(e.target.value, param.type)}
         className='text-xs'
       />
       {param.helperText && (

@@ -23,9 +23,13 @@ export function FlowToExecutionPlan(
   nodes: AppNode[],
   edges: Edge[]
 ): FlowToExecutionPlanType {
+  console.log('nodes --->>>>', JSON.stringify(nodes, null, 4));
+  console.log('edges --->>>>', JSON.stringify(edges, null, 4));
+
   const entrypoint = nodes.find(
     (node) => TaskRegistry[node.data.type].isEntryPoint
   );
+  console.log('entry point -->>>', JSON.stringify(entrypoint, null, 4));
 
   if (!entrypoint) {
     return {
@@ -51,6 +55,7 @@ export function FlowToExecutionPlan(
       nodes: [entrypoint],
     },
   ];
+  console.log('executionPlan', JSON.stringify(executionPlan, null, 4));
 
   planned.add(entrypoint.id);
 
@@ -72,6 +77,8 @@ export function FlowToExecutionPlan(
 
       if (invalidInputs.length > 0) {
         const incomers = getIncomers(currentNode, nodes, edges);
+        console.log('incommers', incomers);
+
         if (incomers.every((incomer) => planned.has(incomer.id))) {
           // If all incoming incomers/edges are planned and there are still invalid inputs
           // this means that this particular node has an invalid input
@@ -113,7 +120,13 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   const inputs = TaskRegistry[node.data.type].inputs;
 
   for (const input of inputs) {
-    const inputValue = node.data.inputs[input.name];
+    console.log('input from the get invalid inputs', input);
+
+    // const inputValue = node.data.inputs[input.name];
+    const inputValue =
+      node.data.inputs.find((nodeInput) => nodeInput.name === input.name)
+        ?.value || '';
+
     const inputValueProvider = inputValue?.length > 0;
 
     if (inputValueProvider) {

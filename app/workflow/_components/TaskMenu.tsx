@@ -16,11 +16,7 @@ export default function TaskMenu() {
       className='w-[340px] min-w-[340px] max-w-[340px] border-r-2
 border-separate h-full p-2 px-4 overflow-auto'
     >
-      <Accordion
-        type='multiple'
-        defaultValue={['extraction', 'interactions', 'timing']}
-        className='w-full'
-      >
+      <Accordion type='multiple' defaultValue={['retail']} className='w-full'>
         <AccordionItem value='interactions'>
           <AccordionTrigger className='font-bold'>
             User interactions
@@ -45,6 +41,17 @@ border-separate h-full p-2 px-4 overflow-auto'
           </AccordionTrigger>
           <AccordionContent className='flex flex-col gap-1'>
             <TaskMenuBtn taskType={TaskType.WAIT_FOR_ELEMENT} />
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value='retail'>
+          <AccordionTrigger className='font-bold'>
+            Retail controls
+          </AccordionTrigger>
+          <AccordionContent className='flex flex-col gap-1'>
+            {/* <TaskMenuBtn taskType={TaskType.INITAL_MESSAGE} /> */}
+            <TaskMenuBtn taskType={TaskType.ORDER_DETAIL} />
+            <TaskMenuBtn taskType={TaskType.AGENT_REQUEST} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

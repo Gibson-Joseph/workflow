@@ -14,7 +14,7 @@ export function CreateFlowNode(
     dragHandle: '.drag-handle',
     data: {
       type: nodeType,
-      inputs: {},
+      inputs: [],
     },
     position: position ?? { x: 0, y: 0 },
   };

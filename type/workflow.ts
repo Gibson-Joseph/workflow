@@ -1,6 +1,6 @@
 import { LucideProps } from 'lucide-react';
 import { FC } from 'react';
-import { TaskParam, TaskType } from './task';
+import { ReplyParam, TaskParam, TaskType } from './task';
 import { AppNode } from './appNode';
 
 export enum workflowStatus {
@@ -34,7 +34,7 @@ export enum WorkflowExecutionStatus {
 
 export enum WorkflowExecutionTrigger {
   MANUAL = 'MANUAL',
-  CRON= 'CRON'
+  CRON = 'CRON',
 }
 
 export enum ExecutionPhaseStatus {
