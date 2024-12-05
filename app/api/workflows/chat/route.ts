@@ -1,10 +1,10 @@
-import { GetChatMessage } from '@/actions/workflows/GetChatMessage';
+import { FindNode } from '@/actions/workflows/FindNode';
 
 export async function POST(request: Request) {
   try {
     const { message } = await request.json();
     console.log('message', message);
-    const res = await GetChatMessage(message);
+    const res = await FindNode(message);
 
     return Response.json({ response: res }, { status: 200 });
   } catch (error) {

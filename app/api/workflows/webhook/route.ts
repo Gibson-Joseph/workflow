@@ -1,10 +1,13 @@
+import { FindNode } from '@/actions/workflows/FindNode';
+import { extractMessageData } from '@/lib/helper/meta';
 import { NextResponse } from 'next/server';
-const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
+// const WhatsappCloudAPI = require('whatsappcloudapi_wrapper');
+import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
 const Whatsapp = new WhatsappCloudAPI({
-  accessToken: process.env.Meta_WA_accessToken,
-  senderPhoneNumberId: process.env.Meta_WA_SenderPhoneNumberId,
-  WABA_ID: process.env.Meta_WA_wabaId,
+  accessToken: process.env.Meta_WA_accessToken!,
+  senderPhoneNumberId: process.env.Meta_WA_SenderPhoneNumberId!,
+  WABA_ID: process.env.Meta_WA_wabaId!,
   graphAPIVersion: 'v21.0',
 });
 
@@ -41,42 +44,20 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log('BODY IS:', JSON.stringify(body, null, 4));
 
-    console.log('WHATSAPP INSTANCE:', Whatsapp);
-
     const data = Whatsapp.parseMessage(body);
+
     console.log('DATA IS:', JSON.stringify(data, null, 4));
 
     if (data?.isMessage) {
+      const messageData = extractMessageData(data);
+      if (!messageData) return;
+      const { messageType } = messageData;
       console.log('incomming messages', JSON.stringify(data, null, 4));
 
-      const incomingMessage = data.message;
-      const recipientPhone = incomingMessage.from.phone;
-      const recipientName = incomingMessage.from.name;
-      const typeOfMsg = incomingMessage.type;
-      const message_id = incomingMessage.message_id;
+      console.log('***** type Of Msg *******', messageType);
 
-      console.log('***** type Of Msg *******', typeOfMsg);
-
-      if (typeOfMsg === 'text_message') {
-        await Whatsapp.sendSimpleButtons({
-          message: `Hey ${recipientName}, \nYou are speaking to a chatbot.\nWhat do you want to do next?`,
-          recipientPhone,
-          listOfButtons: [
-            {
-              title: 'View some products',
-              id: 'see_categories',
-            },
-            {
-              title: 'Speak to a human',
-              id: 'speak_to_human',
-            },
-          ],
-        });
-      }
-
-      // Add the rest of the message handling logic as in your Express code...
-
-      // Ensure all button handlers are implemented here.
+      // Send the data to find the Executable node
+      await FindNode(data, Whatsapp);
     }
 
     return new NextResponse(null, { status: 200 });

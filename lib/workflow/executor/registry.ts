@@ -11,10 +11,13 @@ import { InitialMessageExecutor } from './InitialMessageExecutor';
 import { OrderDetailExecutor } from './OrderDetailExecutor';
 import { RequestToAgentExecutor } from './RequestToAgentExecutor';
 import { InputValue } from '@/type/appNode';
+import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
+import { MessageData } from '@/lib/helper/meta';
 
 type ExecutorFn<T extends WorkflowTask> = (
   inputs: InputValue[],
-  phaseId: string
+  whatsapp: WhatsappCloudAPI,
+  messageData: MessageData
 ) => Promise<any>;
 
 type RegistryType = {

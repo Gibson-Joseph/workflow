@@ -32,14 +32,14 @@ export function generateDynamicJsonStructure(
     } else if (item.type === TaskParamType.IMAGE) {
       structure.image = { url: item.value, description: item.name };
     } else if (item.type === TaskParamType.BUTTON) {
-      if (!structure.actions) {
-        structure.actions = [];
+      if (!structure.listOfButtons) {
+        structure.listOfButtons = [];
       }
 
-      structure.actions.push({
-        label: item.name,
-        actionType: item.value,
-        targetNode: item.targetNode || null,
+      structure.listOfButtons.push({
+        title: item.name,
+        id: item.value,
+        // targetNode: item.targetNode || null,
       });
     }
   });
