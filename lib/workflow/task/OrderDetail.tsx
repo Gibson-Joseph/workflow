@@ -2,7 +2,7 @@ import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
 import { ListOrdered } from 'lucide-react';
 
-export const OrderDetailTask = {
+export const OrderDetailTask: WorkflowTask = {
   type: TaskType.ORDER_DETAIL,
   label: 'Order details',
   icon: (props) => <ListOrdered className='stroke-red-400' {...props} />,
@@ -24,5 +24,5 @@ export const OrderDetailTask = {
     //   name: 'Request agent',
     //   type: TaskParamType.BUTTON,
     // },
-  ] as const,
-} satisfies WorkflowTask;
+  ],
+};

@@ -18,6 +18,7 @@ export enum TaskParamType {
   BUTTON = 'BUTTON',
   ORDER_INFO = 'ORDER_INFO',
   AGENT_PROCESSING = 'AGENT_PROCESSING',
+  // PLACEHOLDER = 'PLACEHOLDER',
 }
 
 export enum TargetParamType {

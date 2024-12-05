@@ -1,13 +1,8 @@
-import {
-  ReplayParmType,
-  TargetParamType,
-  TaskParamType,
-  TaskType,
-} from '@/type/task';
+import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
 import { MessageCircle } from 'lucide-react';
 
-export const InitlaMessageTask = {
+export const InitlaMessageTask: WorkflowTask = {
   type: TaskType.INITAL_MESSAGE,
   label: 'Initial message',
   icon: (props) => <MessageCircle className='stroke-orange-400' {...props} />,
@@ -29,16 +24,16 @@ export const InitlaMessageTask = {
   ] as const,
   outputs: [
     {
-      value: 'view_order',
-      name: 'View order',
-      type: TaskParamType.BUTTON,
-      required: true,
-    },
-    {
       value: 'request_agent',
       name: 'Request agent',
       type: TaskParamType.BUTTON,
       required: true,
     },
-  ] as const,
-} satisfies WorkflowTask;
+    {
+      value: 'view_order',
+      name: 'View order',
+      type: TaskParamType.BUTTON,
+      required: true,
+    },
+  ],
+};

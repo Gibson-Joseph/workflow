@@ -12,19 +12,22 @@ import { OrderDetailExecutor } from './OrderDetailExecutor';
 import { RequestToAgentExecutor } from './RequestToAgentExecutor';
 import { InputValue } from '@/type/appNode';
 
-type ExecutorFn<T extends WorkflowTask> = (inputs: InputValue, phaseId: string) => Promise<any>;
+type ExecutorFn<T extends WorkflowTask> = (
+  inputs: InputValue[],
+  phaseId: string
+) => Promise<any>;
 
 type RegistryType = {
   [K in TaskType]: ExecutorFn<WorkflowTask & { type: K }>;
 };
 
 export const ExecutionRegistry: RegistryType = {
-  // LAUNCH_BROWSER: LaunchBrowserExecutor,
-  // PAGE_TO_HTML: PageToHtmlExecutor,
-  // EXTRACT_TEXT_FROM_ELEMENT: ExtractTextFromElementExecutor,
-  // FILL_INPUT: FillInputExecutor,
-  // CLICK_ELEMENT: ClickElementExecutor,
-  // WAIT_FOR_ELEMENT: WaitForElementExecutor,
+  LAUNCH_BROWSER: (input: InputValue[]): any => {},
+  PAGE_TO_HTML: (input: InputValue[]): any => {},
+  EXTRACT_TEXT_FROM_ELEMENT: (input: InputValue[]): any => {},
+  FILL_INPUT: (input: InputValue[]): any => {},
+  CLICK_ELEMENT: (input: InputValue[]): any => {},
+  WAIT_FOR_ELEMENT: (input: InputValue[]): any => {},
   INITAL_MESSAGE: InitialMessageExecutor,
   ORDER_DETAIL: OrderDetailExecutor,
   AGENT_REQUEST: RequestToAgentExecutor,

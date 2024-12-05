@@ -2,6 +2,7 @@
 import { updateWorkflowPhase } from '@/lib/helper/phases';
 import prisma from '@/lib/prisma';
 import { ExecutionRegistry } from '@/lib/workflow/executor/registry';
+import { InputValue } from '@/type/appNode';
 import { TaskType } from '@/type/task';
 import { ExecutionPhaseStatus } from '@/type/workflow';
 
@@ -21,7 +22,7 @@ export async function GetChatMessage(message: string) {
       throw new Error('Could not find the executor');
     }
     if (!phase?.inputs) return;
-    const pharsedInputs = JSON.parse(phase.inputs!);
+    const pharsedInputs = JSON.parse(phase.inputs!) as InputValue[];
     const res = await executor(pharsedInputs, phase.id); // Execute phase logic.
     await updateWorkflowPhase(phase.id);
     return res;

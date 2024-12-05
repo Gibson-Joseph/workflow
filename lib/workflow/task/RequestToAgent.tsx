@@ -2,7 +2,7 @@ import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
 import { AlignCenter, UserPlus } from 'lucide-react';
 
-export const RequestToAgentTask = {
+export const RequestToAgentTask: WorkflowTask = {
   type: TaskType.AGENT_REQUEST,
   label: 'Request to agent',
   icon: (props) => <UserPlus className='stroke-yellow-400' {...props} />,
@@ -22,5 +22,5 @@ export const RequestToAgentTask = {
       type: TaskParamType.BUTTON,
       required: true,
     },
-  ] as const,
-} satisfies WorkflowTask;
+  ],
+};

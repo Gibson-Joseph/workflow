@@ -2,7 +2,7 @@ import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
 import { EyeIcon } from 'lucide-react';
 
-export const WaitForElementTask = {
+export const WaitForElementTask: WorkflowTask = {
   type: TaskType.WAIT_FOR_ELEMENT,
   label: 'Wait for element',
   icon: (props) => <EyeIcon className='stroke-amber-400' {...props} />,
@@ -35,5 +35,5 @@ export const WaitForElementTask = {
       name: 'Web page',
       type: TaskParamType.BROWSER_INSTANCE,
     },
-  ] as const,
-} satisfies WorkflowTask;
+  ],
+};

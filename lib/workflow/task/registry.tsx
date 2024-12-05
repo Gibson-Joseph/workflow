@@ -14,7 +14,7 @@ type Registry = {
   [K in TaskType]: WorkflowTask & { type: K };
 };
 
-export const TaskRegistry: Registry = {
+export const TaskRegistry: Record<TaskType, WorkflowTask> = {
   LAUNCH_BROWSER: LaunchBrowserTask,
   PAGE_TO_HTML: PageTohtmlTask,
   EXTRACT_TEXT_FROM_ELEMENT: ExtractTextFromElementTask,

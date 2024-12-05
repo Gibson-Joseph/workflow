@@ -2,7 +2,7 @@ import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
 import { CodeIcon, Edit3Icon, LucideProps } from 'lucide-react';
 
-export const FillInputTask = {
+export const FillInputTask: WorkflowTask = {
   type: TaskType.FILL_INPUT,
   label: 'Fill input',
   icon: (props) => <Edit3Icon className='stroke-orange-400' {...props} />,
@@ -30,5 +30,5 @@ export const FillInputTask = {
       name: 'Web page',
       type: TaskParamType.BROWSER_INSTANCE,
     },
-  ] as const,
-} satisfies WorkflowTask;
+  ],
+};

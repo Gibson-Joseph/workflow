@@ -2,7 +2,7 @@ import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
 import { MousePointerClick } from 'lucide-react';
 
-export const ClickElementTask = {
+export const ClickElementTask: WorkflowTask = {
   type: TaskType.CLICK_ELEMENT,
   label: 'Click Element',
   icon: (props) => <MousePointerClick className='stroke-rose-400' {...props} />,
@@ -25,5 +25,5 @@ export const ClickElementTask = {
       name: 'Web page',
       type: TaskParamType.BROWSER_INSTANCE,
     },
-  ] as const,
-} satisfies WorkflowTask;
+  ],
+};

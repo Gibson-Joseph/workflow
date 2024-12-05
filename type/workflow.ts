@@ -1,6 +1,6 @@
 import { LucideProps } from 'lucide-react';
 import { FC } from 'react';
-import { ReplyParam, TaskParam, TaskType } from './task';
+import { TaskParam, TaskType } from './task';
 import { AppNode } from './appNode';
 
 export enum workflowStatus {

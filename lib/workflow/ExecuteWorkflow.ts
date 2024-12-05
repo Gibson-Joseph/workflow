@@ -200,7 +200,7 @@ async function executeWorkflowPhase(
   //   const success = Math.random() < 0.7;
   if (success) {
     // We can execute the phase if the credits are safficient
-    success = await executePhase(phase, node, environment, logCollector);
+    // success = await executePhase(phase, node, environment, logCollector);
   }
 
   const outputs = environment.phases[node.id].outputs;
@@ -247,21 +247,21 @@ async function finalizePhase(
   });
 }
 
-async function executePhase(
-  phase: ExecutionPhase,
-  node: AppNode,
-  environment: Environment,
-  logCollector: LogCollector
-): Promise<boolean> {
-  const runFn = ExecutionRegistry[node.data.type];
-  if (!runFn) {
-    logCollector.error(`not found executor for ${node.data.type}`);
-    return false;
-  }
-  const executionEnvironment: ExecutionEnvironment<any> =
-    createExecutionEnvironment(node, environment, logCollector);
-  return await runFn(executionEnvironment);
-}
+// async function executePhase(
+//   phase: ExecutionPhase,
+//   node: AppNode,
+//   environment: Environment,
+//   logCollector: LogCollector
+// ): Promise<boolean> {
+//   const runFn = ExecutionRegistry[node.data.type];
+//   if (!runFn) {
+//     logCollector.error(`not found executor for ${node.data.type}`);
+//     return false;
+//   }
+//   const executionEnvironment: ExecutionEnvironment<any> =
+//     createExecutionEnvironment(node, environment, logCollector);
+//   return await runFn(executionEnvironment);
+// }
 
 function setupEnvironmentForPhase(
   node: AppNode,
