@@ -6,9 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { IconRight } from 'react-day-picker';
 
 const ImageParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
-  const [imageUrl, setImageUrl] = useState(
-    'https://cdn.shopify.com/b/shopify-brochure2-assets/1b1f811b810037a7ca35b0b191306c18.jpg'
-  );
+  const [imageUrl, setImageUrl] = useState(value);
 
   useEffect(() => {
     updateNodeParamValue(imageUrl, param.type);

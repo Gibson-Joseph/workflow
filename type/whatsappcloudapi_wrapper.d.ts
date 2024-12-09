@@ -28,6 +28,11 @@ declare module 'whatsappcloudapi_wrapper' {
     file_path: string;
   }
 
+  interface TextPaload {
+    message: string;
+    recipientPhone: string;
+  }
+
   class WhatsappCloudAPI {
     constructor(config: WhatsappCloudAPIConfig);
 
@@ -35,6 +40,7 @@ declare module 'whatsappcloudapi_wrapper' {
     parseMessage(payload): any;
     sendSimpleButtons(payload: ButtonMessagePayload): any;
     sendImage(payload: Image): any;
+    sendText(payload: TextPaload): any;
   }
 
   export default WhatsappCloudAPI;

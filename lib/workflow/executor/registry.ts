@@ -14,14 +14,14 @@ import { InputValue } from '@/type/appNode';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 import { MessageData } from '@/lib/helper/meta';
 
-type ExecutorFn<T extends WorkflowTask> = (
+export type ExecutorFn = (
   inputs: InputValue[],
   whatsapp: WhatsappCloudAPI,
   messageData: MessageData
 ) => Promise<any>;
 
 type RegistryType = {
-  [K in TaskType]: ExecutorFn<WorkflowTask & { type: K }>;
+  [K in TaskType]: ExecutorFn;
 };
 
 export const ExecutionRegistry: RegistryType = {

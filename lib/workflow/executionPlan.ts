@@ -120,8 +120,6 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   const inputs = TaskRegistry[node.data.type].inputs;
 
   for (const input of inputs) {
-    console.log('input from the get invalid inputs', input);
-
     // const inputValue = node.data.inputs[input.name];
     const inputValue =
       node.data.inputs.find((nodeInput) => nodeInput.name === input.name)
@@ -161,6 +159,8 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
     }
     invalidInputs.push(input.name);
   }
+  console.log('invalidInputs', invalidInputs);
+
   return invalidInputs;
 }
 

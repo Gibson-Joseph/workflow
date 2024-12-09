@@ -24,7 +24,9 @@ const NodeParamField = ({
   const node = getNode(nodeId) as AppNode;
 
   // const value = node?.data?.inputs?.[param.name];
-  const value = '';
+  const value =
+    node.data.inputs.find((nodeInput) => nodeInput.name === param.name)
+      ?.value || '';
 
   const updateNodeParamValue = useCallback(
     (newValue: string, valueType: TaskParamType) => {

@@ -6,6 +6,7 @@ export type MessageData = {
   recipientName: string;
   recipientPhone: string;
   messageContent: any;
+  buttonReplyId: string;
 };
 
 export function extractMessageData(data: any): MessageData | null {
@@ -20,6 +21,7 @@ export function extractMessageData(data: any): MessageData | null {
   const recipientName = incomingMessage?.from?.name || '';
   const recipientPhone = incomingMessage?.from?.phone || '';
   const messageContent = incomingMessage?.content || null;
+  const buttonReplyId = incomingMessage?.button_reply?.id || null;
 
   return {
     messageId,
@@ -27,5 +29,6 @@ export function extractMessageData(data: any): MessageData | null {
     recipientName,
     recipientPhone,
     messageContent,
+    buttonReplyId,
   };
 }

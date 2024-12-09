@@ -42,20 +42,9 @@ export async function POST(req: Request) {
   try {
     console.log('POST: Someone is pinging me!');
     const body = await req.json();
-    console.log('BODY IS:', JSON.stringify(body, null, 4));
-
     const data = Whatsapp.parseMessage(body);
 
-    console.log('DATA IS:', JSON.stringify(data, null, 4));
-
     if (data?.isMessage) {
-      const messageData = extractMessageData(data);
-      if (!messageData) return;
-      const { messageType } = messageData;
-      console.log('incomming messages', JSON.stringify(data, null, 4));
-
-      console.log('***** type Of Msg *******', messageType);
-
       // Send the data to find the Executable node
       await FindNode(data, Whatsapp);
     }

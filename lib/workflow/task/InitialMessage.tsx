@@ -14,12 +14,16 @@ export const InitlaMessageTask: WorkflowTask = {
       type: TaskParamType.IMAGE,
       required: true,
       hideHandle: true,
+      value:
+        'https://cdn.shopify.com/b/shopify-brochure2-assets/1b1f811b810037a7ca35b0b191306c18.jpg',
     },
     {
       name: 'message',
       type: TaskParamType.STRING,
       required: true,
       hideHandle: true,
+      value:
+        'Yavar has some great products lined up for you based on your previous shopping history',
     },
   ] as const,
   outputs: [

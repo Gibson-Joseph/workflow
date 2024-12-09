@@ -1,8 +1,9 @@
+import { MessageData } from '@/lib/helper/meta';
 import { generateDynamicJsonStructure } from '@/lib/helper/phases';
 import { InputValue } from '@/type/appNode';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
-const orderDetail = {
+const orderRes = {
   orderId: 'ORD123',
   customerName: 'John Doe',
   orderDate: '2024-12-04',
@@ -26,10 +27,26 @@ const orderDetail = {
 
 export async function OrderDetailExecutor(
   input: InputValue[],
-  whatsapp: WhatsappCloudAPI
+  Whatsapp: WhatsappCloudAPI,
+  messageData: MessageData
 ) {
   try {
     console.log('OrderDetailExecutor function has called');
-    return generateDynamicJsonStructure(input, orderDetail);
+    const formeatedData = generateDynamicJsonStructure(input, orderRes);
+    console.log('formeatedData', formeatedData);
+    const orderDetails = formeatedData.dynamicContent;
+
+    const message = `Order Details: \n Order ID: ${
+      orderDetails.orderId
+    }\n Customer Name: ${orderDetails.customerName}\n Order Date: ${
+      orderDetails.orderDate
+    }\n Total Amount: $${orderDetails.totalAmount.toFixed(2)}\n Status: ${
+      orderDetails.status
+    }`;
+
+    await Whatsapp.sendText({
+      recipientPhone: messageData.recipientPhone,
+      message,
+    });
   } catch (error: any) {}
 }

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ParamProps } from '@/type/appNode';
-import { Badge } from '@/components/ui/badge'; // A custom badge component for status
 import { Loader2Icon } from 'lucide-react';
 
 const AgentProcessingParam = ({
@@ -8,6 +7,12 @@ const AgentProcessingParam = ({
   updateNodeParamValue,
   value,
 }: ParamProps) => {
+  const [message, setMessage] = useState(param.value);
+
+  useEffect(() => {
+    if (message) updateNodeParamValue(message, param.type);
+  }, [message]);
+
   return (
     <div className='node-card p-6 rounded-xl shadow-lg bg-white'>
       {/* Header with Icon */}
@@ -41,10 +46,7 @@ const AgentProcessingParam = ({
         </div>
 
         {/* Subtext and Information */}
-        <p className='text-xs text-gray-500 mt-4'>
-          You will be notified once an agent becomes available. In the meantime,
-          feel free to explore our help section or contact support.
-        </p>
+        <p className='text-xs text-gray-500 mt-4'>{message}</p>
       </div>
 
       {/* Footer with Actions */}

@@ -27,7 +27,9 @@ export function generateDynamicJsonStructure(
   const structure: any = {};
 
   inputData.forEach((item) => {
-    if (item.type === TaskParamType.STRING && item.name === 'message') {
+    if (
+      [TaskParamType.STRING, TaskParamType.AGENT_PROCESSING].includes(item.type)
+    ) {
       structure.message = item.value;
     } else if (item.type === TaskParamType.IMAGE) {
       structure.image = { url: item.value, description: item.name };
@@ -38,7 +40,7 @@ export function generateDynamicJsonStructure(
 
       structure.listOfButtons.push({
         title: item.name,
-        id: item.value,
+        id: item.targetNode || 'TARGET_NODE_NOT_FOUND',
         // targetNode: item.targetNode || null,
       });
     }

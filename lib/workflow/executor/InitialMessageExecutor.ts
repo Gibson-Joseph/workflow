@@ -13,15 +13,15 @@ export async function InitialMessageExecutor(
     const formeatedData = generateDynamicJsonStructure(input);
     console.log('formeated data', formeatedData);
 
+    // await Whatsapp.sendImage({
+    //   recipientPhone: messageData.recipientPhone,
+    //   caption: 'Test',
+    //   file_path: formeatedData.image.url,
+    // });
+
     await Whatsapp.sendSimpleButtons({
       recipientPhone: messageData.recipientPhone,
       ...formeatedData,
-    });
-
-    await Whatsapp.sendImage({
-      recipientPhone: 'your recipient phone number here',
-      caption: 'Test',
-      file_path: 'https://example.com/image.png',
     });
   } catch (error: any) {
     console.log('someting went wrong', error);
