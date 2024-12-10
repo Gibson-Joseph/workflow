@@ -1,12 +1,10 @@
 'use server';
 import { extractMessageData } from '@/lib/helper/meta';
-import { updateWorkflowPhase } from '@/lib/helper/phases';
 import prisma from '@/lib/prisma';
 
 import { ExecutionRegistry } from '@/lib/workflow/executor/registry';
 import { InputValue } from '@/type/appNode';
 import { TaskType } from '@/type/task';
-import { ExecutionPhaseStatus } from '@/type/workflow';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
 export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
@@ -15,20 +13,15 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
     if (!messageData) return;
     const { messageType, buttonReplyId } = messageData;
 
-    const workflowExecutionPhase = await prisma.executionPhase.findMany({
-      where: {
-        status: ExecutionPhaseStatus.CREATED,
-      },
-    });
+    const workflowExecutionPhase = await prisma.executionPhase.findMany();
+    console.log('workflowExecutionPhase', workflowExecutionPhase);
 
     let phase;
 
     console.log('<<-- TYPE OF MSG -->>: ', messageType);
 
     if (messageType === 'text_message') {
-      phase = workflowExecutionPhase.find(
-        (node) => node.status === ExecutionPhaseStatus.CREATED
-      );
+      phase = workflowExecutionPhase[0];
     }
 
     if (messageType === 'simple_button_message') {
@@ -48,8 +41,6 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
 
     const pharsedInputs = JSON.parse(phase.inputs!) as InputValue[];
     const res = await executor(pharsedInputs, whatsapp, messageData); // Execute phase logic.
-
-    // await updateWorkflowPhase(phase.id);
 
     return res;
   } catch (error: any) {
