@@ -28,11 +28,16 @@ const orderRes = {
 export async function OrderDetailExecutor(
   input: InputValue[],
   Whatsapp: WhatsappCloudAPI,
-  messageData: MessageData
+  messageData: MessageData,
+  sourceNode?: string | null
 ) {
   try {
     console.log('OrderDetailExecutor function has called');
-    const formeatedData = generateDynamicJsonStructure(input, orderRes);
+    const formeatedData = generateDynamicJsonStructure(
+      input,
+      sourceNode,
+      orderRes
+    );
     console.log('formeatedData', formeatedData);
     const orderDetails = formeatedData.dynamicContent;
 
@@ -44,9 +49,10 @@ export async function OrderDetailExecutor(
       orderDetails.status
     }`;
 
-    await Whatsapp.sendText({
+    await Whatsapp.sendSimpleButtons({
       recipientPhone: messageData.recipientPhone,
       message,
+      listOfButtons: formeatedData.listOfButtons,
     });
   } catch (error: any) {}
 }

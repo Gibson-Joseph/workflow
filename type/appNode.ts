@@ -14,6 +14,7 @@ export interface AppNodeData {
   // inputs: Record<string, string>[];
   inputs: InputValue[];
   type: TaskType;
+  sourceNode?: string;
 }
 
 export interface AppNode extends Node {

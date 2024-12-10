@@ -69,11 +69,11 @@ export async function RunWorkflow(form: {
             return {
               userId,
               number: phase.phase,
-              node: JSON.stringify(node),
               name: TaskRegistry[node.data.type].label,
               inputs: JSON.stringify(node.data.inputs),
               nodeType: node.data.type,
               nodeId: node.id,
+              sourceNode: node.data.sourceNode,
             };
           });
         }),

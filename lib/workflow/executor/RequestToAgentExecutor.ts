@@ -6,11 +6,12 @@ import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 export async function RequestToAgentExecutor(
   input: InputValue[],
   Whatsapp: WhatsappCloudAPI,
-  messageData: MessageData
+  messageData: MessageData,
+  sourceNode?: string | null
 ) {
   try {
     console.log('RequestToAgentExecutor function has called');
-    const formeatedData = generateDynamicJsonStructure(input);
+    const formeatedData = generateDynamicJsonStructure(input, sourceNode);
     console.log('formeatedData', formeatedData);
 
     await Whatsapp.sendSimpleButtons({

@@ -3,6 +3,7 @@ import { TaskParamType } from '@/type/task';
 
 export function generateDynamicJsonStructure(
   inputData: InputValue[],
+  sourceNode?: string | null,
   serverData?: any // Pass the server data as an argument
 ) {
   const structure: any = {};
@@ -26,6 +27,16 @@ export function generateDynamicJsonStructure(
       });
     }
   });
+
+  if (sourceNode) {
+    if (!structure.listOfButtons || structure.listOfButtons?.length === 0) {
+      structure.listOfButtons = [];
+    }
+    structure.listOfButtons.push({
+      title: 'Go back',
+      id: sourceNode,
+    });
+  }
 
   // Merge server data dynamically
   if (serverData) {

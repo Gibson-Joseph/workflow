@@ -12,7 +12,7 @@ export const OrderDetailTask: WorkflowTask = {
     {
       name: 'Order info',
       type: TaskParamType.ORDER_INFO,
-      required: true,
+      required: false,
     },
   ] as const,
   outputs: [
