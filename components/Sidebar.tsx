@@ -1,18 +1,11 @@
 'use client';
-import {
-  CoinsIcon,
-  HomeIcon,
-  Layers2Icon,
-  MenuIcon,
-  ShieldCheckIcon,
-} from 'lucide-react';
+import { HomeIcon, Layers2Icon, MenuIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import { Logo } from './Logo';
 import Link from 'next/link';
 import { Button, buttonVariants } from './ui/button';
 import { usePathname } from 'next/navigation';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
-import UserAvailableCreditsBadge from './UserAvailableCreditsBadge';
 
 const routes = [
   {
@@ -25,16 +18,6 @@ const routes = [
     label: 'Workflows',
     icon: Layers2Icon,
   },
-  {
-    href: 'credentials',
-    label: 'Credentials',
-    icon: ShieldCheckIcon,
-  },
-  {
-    href: 'billing',
-    label: 'Billing',
-    icon: CoinsIcon,
-  },
 ];
 
 const DesktopSidebar = () => {
@@ -44,13 +27,11 @@ const DesktopSidebar = () => {
     routes.find(
       (route) => route.href.length > 0 && pathName.includes(route.href)
     ) || routes[0];
+
   return (
     <div className='hidden relative md:block max-w-[280px] min-w-[280px] h-screen overflow-hidden w-full bg-primary/5 dark:bg-secondary/30 dark:text-foreground text-muted-foreground border-r-2 border-separate'>
       <div className='flex items-center justify-center gap-2 border-b-[1px] border-separate p-4'>
         <Logo />
-      </div>
-      <div className='p-2'>
-        <UserAvailableCreditsBadge />
       </div>
       <div className='flex flex-col p-2 gap-1'>
         {routes.map((route) => (
@@ -95,7 +76,6 @@ export function MobileSidebar() {
             side={'left'}
           >
             <Logo />
-            <UserAvailableCreditsBadge />
             <div className='flex flex-col gap-1'>
               {routes.map((route) => (
                 <Link

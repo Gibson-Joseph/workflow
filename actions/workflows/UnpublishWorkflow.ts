@@ -33,8 +33,6 @@ export async function UnpublishWorkflow(id: string) {
     },
     data: {
       status: workflowStatus.DRAFT,
-      executionPlan: null,
-      creditsCost: 0,
     },
   });
 

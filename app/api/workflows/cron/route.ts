@@ -7,8 +7,8 @@ export async function GET() {
   const workflows = await prisma.workflow.findMany({
     where: {
       status: workflowStatus.PUBLISHED,
-      cron: { not: null },
-      nextRunAt: { lte: now },
+      // cron: { not: null },
+      // nextRunAt: { lte: now },
     },
     select: { id: true },
   });
