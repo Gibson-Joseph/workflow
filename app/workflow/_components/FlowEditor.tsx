@@ -116,12 +116,10 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
       // Find the source node
       const sourceNode = nodes.find((nd) => nd.id === connection.source);
 
-      if (!sourceNode) {
-        return;
-      }
+      if (!sourceNode) return;
 
       // Update the source node's inputs
-      const updatedInputs = sourceNode.data.inputs.map((input) => {
+      const updatedSourceInputs = sourceNode.data.inputs.map((input) => {
         if (input.name === connection.sourceHandle) {
           return { ...input, targetNode: connection.target };
         }
@@ -130,7 +128,16 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
 
       updateNodeData(sourceNode.id, {
         ...sourceNode.data,
-        inputs: updatedInputs,
+        inputs: updatedSourceInputs,
+      });
+
+      const targetNode = nodes.find((nd) => nd.id === connection.target);
+      if (!targetNode) return;
+      console.log('targetNode', targetNode);
+
+      updateNodeData(targetNode?.id, {
+        ...targetNode?.data,
+        sourceNode: connection.source,
       });
     },
     [setEdges, updateNodeData, nodes]

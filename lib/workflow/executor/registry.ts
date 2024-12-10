@@ -17,20 +17,21 @@ import { MessageData } from '@/lib/helper/meta';
 export type ExecutorFn = (
   inputs: InputValue[],
   whatsapp: WhatsappCloudAPI,
-  messageData: MessageData
-) => Promise<any>;
+  messageData: MessageData,
+  sourceNode?: string | null
+) => void;
 
 type RegistryType = {
   [K in TaskType]: ExecutorFn;
 };
 
 export const ExecutionRegistry: RegistryType = {
-  LAUNCH_BROWSER: (input: InputValue[]): any => {},
-  PAGE_TO_HTML: (input: InputValue[]): any => {},
-  EXTRACT_TEXT_FROM_ELEMENT: (input: InputValue[]): any => {},
-  FILL_INPUT: (input: InputValue[]): any => {},
-  CLICK_ELEMENT: (input: InputValue[]): any => {},
-  WAIT_FOR_ELEMENT: (input: InputValue[]): any => {},
+  LAUNCH_BROWSER: (): any => {},
+  PAGE_TO_HTML: (): any => {},
+  EXTRACT_TEXT_FROM_ELEMENT: (): any => {},
+  FILL_INPUT: (): any => {},
+  CLICK_ELEMENT: (): any => {},
+  WAIT_FOR_ELEMENT: (): any => {},
   INITAL_MESSAGE: InitialMessageExecutor,
   ORDER_DETAIL: OrderDetailExecutor,
   AGENT_REQUEST: RequestToAgentExecutor,

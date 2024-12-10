@@ -40,7 +40,12 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
     if (!phase?.inputs) return;
 
     const pharsedInputs = JSON.parse(phase.inputs!) as InputValue[];
-    const res = await executor(pharsedInputs, whatsapp, messageData); // Execute phase logic.
+    const res = await executor(
+      pharsedInputs,
+      whatsapp,
+      messageData,
+      phase?.sourceNode
+    ); // Execute phase logic.
 
     return res;
   } catch (error: any) {
