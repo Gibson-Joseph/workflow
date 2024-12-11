@@ -1,5 +1,5 @@
-export type META_MESSAGE_TYPE = {
-  TEXT_MESSAGE: 'TEXT_MESSAGE';
-  SIMPLE_BUTTON_MESSAGE: 'SIMPLE_BUTTON_MESSAGE';
-  RADIO_BUTTON_MESSAGE: 'RADIO_BUTTON_MESSAGE';
-};
+export enum META_MESSAGE_TYPE {
+  TEXT_MESSAGE = 'text_message',
+  SIMPLE_BUTTON_MESSAGE = 'simple_button_message',
+  RADIO_BUTTON_MESSAGE = 'radio_button_message',
+}
