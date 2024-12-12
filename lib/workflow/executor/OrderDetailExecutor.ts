@@ -1,44 +1,33 @@
 import { MessageData } from '@/lib/helper/meta';
-import { generateDynamicJsonStructure } from '@/lib/helper/phases';
+import {
+  generateDynamicJsonStructure,
+  generateRandomNumber,
+} from '@/lib/helper/phases';
+import prisma from '@/lib/prisma';
 import { InputValue } from '@/type/appNode';
+import { ExecutionPhase } from '@prisma/client';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
-
-const orderRes = {
-  orderId: 'ORD123',
-  customerName: 'John Doe',
-  orderDate: '2024-12-04',
-  totalAmount: 120.5,
-  status: 'Processing',
-  items: [
-    {
-      productId: 'PROD001',
-      productName: 'Wireless Headphones',
-      quantity: 2,
-      price: 50.0,
-    },
-    {
-      productId: 'PROD002',
-      productName: 'Charging Cable',
-      quantity: 1,
-      price: 20.5,
-    },
-  ],
-};
 
 export async function OrderDetailExecutor(
   input: InputValue[],
   Whatsapp: WhatsappCloudAPI,
   messageData: MessageData,
-  sourceNode?: string | null
+  phase: ExecutionPhase
 ) {
+  const orderRes = {
+    orderId: `ORD-${generateRandomNumber()}`,
+    customerName: 'John Doe',
+    orderDate: '2024-12-04',
+    totalAmount: 120.5,
+    status: 'Processing',
+  };
+
   try {
-    console.log('OrderDetailExecutor function has called');
     const formeatedData = generateDynamicJsonStructure(
       input,
-      sourceNode,
+      phase.sourceNode,
       orderRes
     );
-    console.log('formeatedData', formeatedData);
     const orderDetails = formeatedData.dynamicContent;
 
     const message = `Order Details: \n Order ID: ${
@@ -49,10 +38,54 @@ export async function OrderDetailExecutor(
       orderDetails.status
     }`;
 
+    const customer = await prisma.customer.findUnique({
+      where: {
+        phoneNo: messageData.recipientPhone,
+      },
+    });
+
     await Whatsapp.sendSimpleButtons({
       recipientPhone: messageData.recipientPhone,
       message,
       listOfButtons: formeatedData.listOfButtons,
     });
-  } catch (error: any) {}
+
+    const orderInfo = {
+      orderId: orderRes.orderId,
+      status: 'IN-PROGRESS',
+    };
+
+    if (!customer) return;
+    // Check if an execution output already exists for this customer and node
+    const existingOutput = await prisma.executionOutput.findFirst({
+      where: {
+        customerId: customer.id,
+        nodeId: phase.nodeId,
+      },
+    });
+
+    if (existingOutput) {
+      // Update the existing record
+      await prisma.executionOutput.update({
+        where: {
+          id: existingOutput.id,
+        },
+        data: {
+          ExecutionOutput: JSON.stringify(orderInfo), // Update the output value
+        },
+      });
+      console.log('Updated existing execution output');
+    } else {
+      // Create a new record
+      await prisma.executionOutput.create({
+        data: {
+          ExecutionOutput: JSON.stringify(orderInfo),
+          customerId: customer.id,
+          nodeId: phase.nodeId,
+        },
+      });
+    }
+  } catch (error: any) {
+    console.log('someting went wrong', error);
+  }
 }
