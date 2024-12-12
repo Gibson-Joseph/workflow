@@ -4,7 +4,7 @@ import { InputValue } from '@/type/appNode';
 import { ExecutionPhase } from '@prisma/client';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
-export async function RequestToAgentExecutor(
+export async function TextMessageExecutor(
   input: InputValue[],
   Whatsapp: WhatsappCloudAPI,
   messageData: MessageData,
@@ -13,11 +13,9 @@ export async function RequestToAgentExecutor(
   try {
     const formeatedData = generateDynamicJsonStructure(input, phase.sourceNode);
 
-    await Whatsapp.sendSimpleButtons({
+    await Whatsapp.sendText({
       recipientPhone: messageData.recipientPhone,
       ...formeatedData,
     });
-  } catch (error: any) {
-    console.log('someting went wrong', error);
-  }
+  } catch (error: any) {}
 }

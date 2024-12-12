@@ -1,24 +1,17 @@
 import { MessageData } from '@/lib/helper/meta';
 import { generateDynamicJsonStructure } from '@/lib/helper/phases';
 import { InputValue } from '@/type/appNode';
+import { ExecutionPhase } from '@prisma/client';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
 export async function InitialMessageExecutor(
   input: InputValue[],
   Whatsapp: WhatsappCloudAPI,
   messageData: MessageData,
-  sourceNode?: string | null
+  phase: ExecutionPhase
 ) {
   try {
-    console.log('InitialMessageExecutor function has called');
-    const formeatedData = generateDynamicJsonStructure(input, sourceNode);
-    console.log('formeated data', formeatedData);
-
-    // await Whatsapp.sendImage({
-    //   recipientPhone: messageData.recipientPhone,
-    //   caption: 'Test',
-    //   file_path: formeatedData.image.url,
-    // });
+    const formeatedData = generateDynamicJsonStructure(input, phase.sourceNode);
 
     await Whatsapp.sendSimpleButtons({
       recipientPhone: messageData.recipientPhone,

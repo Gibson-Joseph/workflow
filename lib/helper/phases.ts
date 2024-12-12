@@ -10,7 +10,11 @@ export function generateDynamicJsonStructure(
 
   inputData.forEach((item) => {
     if (
-      [TaskParamType.STRING, TaskParamType.AGENT_PROCESSING].includes(item.type)
+      [
+        TaskParamType.STRING,
+        TaskParamType.AGENT_PROCESSING,
+        TaskParamType.PROCESS_RESPONSE,
+      ].includes(item.type)
     ) {
       structure.message = item.value;
     } else if (item.type === TaskParamType.IMAGE) {
@@ -23,7 +27,6 @@ export function generateDynamicJsonStructure(
       structure.listOfButtons.push({
         title: item.name,
         id: item.targetNode || 'TARGET_NODE_NOT_FOUND',
-        // targetNode: item.targetNode || null,
       });
     }
   });

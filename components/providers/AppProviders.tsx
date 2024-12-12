@@ -3,7 +3,6 @@
 import { ThemeProvider } from 'next-themes';
 import { ReactNode, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import NextTopLoader from 'nextjs-toploader';
 
 export function AppProviders({ children }: { children: ReactNode }) {
@@ -14,7 +13,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
       <ThemeProvider attribute='class' defaultTheme='sytem' enableSystem>
         {children}
       </ThemeProvider>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }

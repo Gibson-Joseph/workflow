@@ -16,13 +16,9 @@ export const OrderDetailTask: WorkflowTask = {
     },
   ] as const,
   outputs: [
-    // {
-    //   name: 'View order',
-    //   type: TaskParamType.BUTTON,
-    // },
-    // {
-    //   name: 'Request agent',
-    //   type: TaskParamType.BUTTON,
-    // },
+    {
+      name: 'Check status',
+      type: TaskParamType.BUTTON,
+    },
   ],
 };

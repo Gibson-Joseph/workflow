@@ -39,8 +39,6 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
 
     let phase;
 
-    console.log('<<-- TYPE OF MSG -->>: ', messageType);
-
     switch (messageType) {
       case META_MESSAGE_TYPE.TEXT_MESSAGE: {
         if (customer && isAfterThreshold(customer.updatedAt)) {
@@ -80,12 +78,7 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
     }
 
     const parsedInputs = JSON.parse(phase.inputs) as InputValue[];
-    const result = await executor(
-      parsedInputs,
-      whatsapp,
-      messageData,
-      phase.sourceNode
-    );
+    const result = await executor(parsedInputs, whatsapp, messageData, phase);
 
     if (customer) {
       await prisma.customer.update({

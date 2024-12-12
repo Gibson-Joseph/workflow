@@ -16,7 +16,17 @@ export default function TaskMenu() {
       className='w-[340px] min-w-[340px] max-w-[340px] border-r-2
 border-separate h-full p-2 px-4 overflow-auto'
     >
-      <Accordion type='multiple' defaultValue={['retail']} className='w-full'>
+      <Accordion
+        type='multiple'
+        defaultValue={['retail', 'messages']}
+        className='w-full'
+      >
+        <AccordionItem value='messages'>
+          <AccordionTrigger className='font-bold'>Messages</AccordionTrigger>
+          <AccordionContent className='flex flex-col gap-1'>
+            <TaskMenuBtn taskType={TaskType.TEXT_MESSAGE} />
+          </AccordionContent>
+        </AccordionItem>
         <AccordionItem value='retail'>
           <AccordionTrigger className='font-bold'>
             Retail controls
@@ -25,6 +35,7 @@ border-separate h-full p-2 px-4 overflow-auto'
             {/* <TaskMenuBtn taskType={TaskType.INITAL_MESSAGE} /> */}
             <TaskMenuBtn taskType={TaskType.ORDER_DETAIL} />
             <TaskMenuBtn taskType={TaskType.AGENT_REQUEST} />
+            <TaskMenuBtn taskType={TaskType.ORDER_STATUS} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

@@ -10,6 +10,7 @@ import ButtonParam from './param/ButtonParam';
 import ImageParam from './param/ImageParam';
 import OrderInfoParam from './param/OrderInfoParam';
 import AgentProcessingParam from './param/AgentProcessingParam';
+import ProcessResponse from './param/ProcessResponse';
 
 const NodeParamField = ({
   param,
@@ -116,6 +117,15 @@ const NodeParamField = ({
           param={param}
           value={value}
           updateNodeParamValue={updateNodeParamValue}
+          disabled={false}
+        />
+      );
+    case TaskParamType.PROCESS_RESPONSE:
+      return (
+        <ProcessResponse
+          param={param}
+          updateNodeParamValue={updateNodeParamValue}
+          value=''
           disabled={false}
         />
       );

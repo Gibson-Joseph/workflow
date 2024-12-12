@@ -8,4 +8,5 @@ export const colorForHanlde: Record<TaskParamType, string> = {
   IMAGE: '!bg-red-400',
   AGENT_PROCESSING: '!bg-yellow-400',
   ORDER_INFO: '!bg-blue-400',
+  PROCESS_RESPONSE: '!bg-purple-400',
 };

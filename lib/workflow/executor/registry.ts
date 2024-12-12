@@ -13,12 +13,15 @@ import { RequestToAgentExecutor } from './RequestToAgentExecutor';
 import { InputValue } from '@/type/appNode';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 import { MessageData } from '@/lib/helper/meta';
+import { TextMessageExecutor } from './TextMessageExecutor';
+import { OrderStatusExecutor } from './OrderStatusExecutor';
+import { ExecutionPhase } from '@prisma/client';
 
 export type ExecutorFn = (
   inputs: InputValue[],
   whatsapp: WhatsappCloudAPI,
   messageData: MessageData,
-  sourceNode?: string | null
+  phase: ExecutionPhase
 ) => void;
 
 type RegistryType = {
@@ -35,4 +38,6 @@ export const ExecutionRegistry: RegistryType = {
   INITAL_MESSAGE: InitialMessageExecutor,
   ORDER_DETAIL: OrderDetailExecutor,
   AGENT_REQUEST: RequestToAgentExecutor,
+  TEXT_MESSAGE: TextMessageExecutor,
+  ORDER_STATUS: OrderStatusExecutor,
 };
