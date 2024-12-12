@@ -1,15 +1,17 @@
 import { memo, useEffect, useState } from 'react';
-import NodeCard from './NodeCard';
 import { NodeProps } from '@xyflow/react';
+
+import NodeCard from './NodeCard';
 import NodeHeader from './NodeHeader';
+
+import { Badge } from '@/components/ui/badge';
+import { TaskType } from '@/type/task';
 import { AppNodeData } from '@/type/appNode';
 import { TaskRegistry } from '@/lib/workflow/task/registry';
-import { NodeInputs, NodeInput } from './NodeInputs';
-import { NodeOutput, NodeOutputs } from './NodeOutputs';
-import { Badge } from '@/components/ui/badge';
-import { TaskParam, TaskParamType, TaskType } from '@/type/task';
 import { AddMoreParam } from './param/AddMoreParam';
 import { WorkflowTask } from '@/type/workflow';
+import { NodeInputs, NodeInput } from './NodeInputs';
+import { NodeOutput, NodeOutputs } from './NodeOutputs';
 
 const DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === 'true';
 const NodeComponent = memo(({ id, selected, data }: NodeProps) => {
@@ -20,7 +22,6 @@ const NodeComponent = memo(({ id, selected, data }: NodeProps) => {
     const nodeData = data as AppNodeData;
     const task = TaskRegistry[nodeData.type];
     setNodeComponent(task);
-    console.log('task', task);
   }, [data, nodeComponent]);
   if (!nodeComponent) return;
 

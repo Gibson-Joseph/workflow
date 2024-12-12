@@ -8,7 +8,7 @@ const ButtonParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
   }, []);
 
   return (
-    <Button className='w-full' variant={'default'}>
+    <Button className='w-full' variant={'default'} key={value}>
       {param.name}
     </Button>
   );

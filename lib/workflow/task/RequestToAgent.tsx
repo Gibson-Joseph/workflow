@@ -1,6 +1,6 @@
 import { TaskParamType, TaskType } from '@/type/task';
 import { WorkflowTask } from '@/type/workflow';
-import {  UserPlus } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
 
 export const RequestToAgentTask: WorkflowTask = {
   type: TaskType.AGENT_REQUEST,
@@ -10,10 +10,9 @@ export const RequestToAgentTask: WorkflowTask = {
   credits: 1,
   inputs: [
     {
-      name: 'Processing Agent Request',
+      name: 'Message',
       type: TaskParamType.AGENT_PROCESSING,
-      value:
-        'You will be notified once an agent becomes available. In the meantime, feel free to explore our help section or contact support.',
+      value: '',
       required: true,
     },
   ] as const,

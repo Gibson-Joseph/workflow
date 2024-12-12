@@ -85,6 +85,13 @@ export async function RunWorkflow(form: {
     },
   });
 
+  // Update the customer's active phaseId while update the execution
+  await prisma.customer.updateMany({
+    data: {
+      activePhaseId: null,
+    },
+  });
+
   if (!execution) {
     throw new Error('workflow execution not created');
   }

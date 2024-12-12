@@ -1,6 +1,6 @@
 'use client ';
 import { TaskParam, TaskParamType } from '@/type/task';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import StringParam from './param/StringParam';
 import { useReactFlow } from '@xyflow/react';
 import { AppNode } from '@/type/appNode';
@@ -21,32 +21,39 @@ const NodeParamField = ({
   disabled: boolean;
 }) => {
   const { updateNodeData, getNode } = useReactFlow();
-  const node = getNode(nodeId) as AppNode;
+  const nodeData = getNode(nodeId) as AppNode;
 
   // const value = node?.data?.inputs?.[param.name];
-  const value =
-    node.data.inputs.find((nodeInput) => nodeInput.name === param.name)
-      ?.value || '';
+  const value = useMemo(() => {
+    return (
+      nodeData.data.inputs.find((nodeInput) => nodeInput.name === param.name)
+        ?.value || ''
+    );
+  }, [nodeData.data.inputs, param.name]);
 
   const updateNodeParamValue = useCallback(
     (newValue: string, valueType: TaskParamType) => {
-      const updatedInputs = node.data.inputs.map((input) =>
-        input.name === param.name
-          ? { ...input, value: newValue, type: valueType }
-          : input
-      );
+      updateNodeData(nodeId, (node: any) => {
+        const updatedInputs = node.data.inputs.map((input: TaskParam) =>
+          input.name === param.name
+            ? { ...input, value: newValue, type: valueType }
+            : input
+        );
 
-      // If the param doesn't exist, add it.
-      const inputs = updatedInputs.some((input) => input.name === param.name)
-        ? updatedInputs
-        : [
-            ...updatedInputs,
-            { value: newValue, type: valueType, name: param.name },
-          ];
+        // If the param doesn't exist, add it.
+        const inputs = updatedInputs.some(
+          (input: TaskParam) => input.name === param.name
+        )
+          ? updatedInputs
+          : [
+              ...updatedInputs,
+              { value: newValue, type: valueType, name: param.name },
+            ];
 
-      updateNodeData(nodeId, { inputs });
+        return { ...node.data, inputs };
+      });
     },
-    [node?.data?.inputs, nodeId, param.name, updateNodeData]
+    [nodeId, param.name, updateNodeData]
   );
 
   switch (param.type) {
@@ -109,7 +116,7 @@ const NodeParamField = ({
           param={param}
           value={value}
           updateNodeParamValue={updateNodeParamValue}
-          disabled={disabled}
+          disabled={false}
         />
       );
     default:
