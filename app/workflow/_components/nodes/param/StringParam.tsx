@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ParamProps } from '@/type/appNode';
-import React, { useEffect, useId, useState } from 'react';
+import React, { useId } from 'react';
 
 const StringParam = ({
   param,
@@ -12,11 +12,13 @@ const StringParam = ({
   disabled,
 }: ParamProps) => {
   const id = useId();
-  const [internelValue, setInternelValue] = useState(value);
 
-  useEffect(() => {
-    setInternelValue(value);
-  }, [value]);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const newValue = e.target.value;
+    updateNodeParamValue(newValue, param.type);
+  };
 
   let Component: any = Input;
   if (param.variant === 'textarea') {
@@ -32,10 +34,10 @@ const StringParam = ({
       <Component
         id={id}
         disabled={disabled}
-        value={internelValue}
-        onChange={(e: any) => setInternelValue(e.target.value)}
+        value={value}
+        onChange={handleChange}
         placeholder='Enter value here'
-        onBlur={(e: any) => updateNodeParamValue(e.target.value, param.type)}
+        // onBlur={(e: any) => updateNodeParamValue(e.target.value, param.type)}
         className='text-xs'
       />
       {param.helperText && (

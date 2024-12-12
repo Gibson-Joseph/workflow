@@ -46,7 +46,7 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
         if (customer && isAfterThreshold(customer.updatedAt)) {
           phase = workflowExecutionPhases[0]; // Execute the first phase
         } else {
-          phase = customer
+          phase = customer?.activePhaseId
             ? await findExecutionPhase(customer.activePhaseId)
             : workflowExecutionPhases[0];
         }

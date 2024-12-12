@@ -2,23 +2,24 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ParamProps } from '@/type/appNode';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { IconRight } from 'react-day-picker';
 
 const ImageParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
-  const [imageUrl, setImageUrl] = useState(value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    updateNodeParamValue(newValue, param.type);
+  };
 
-  useEffect(() => {
-    updateNodeParamValue(imageUrl, param.type);
-  }, [imageUrl]);
+  const clearImageUrl = () => {
+    updateNodeParamValue('', param.type);
+  };
 
   return (
     <div className='w-full h-full space-y-2 flex flex-col'>
       {/* Image Preview */}
       <div className='relative w-full h-32 bg-gray-200 rounded-lg overflow-hidden shadow-sm'>
-        {imageUrl ? (
+        {value ? (
           <Image
-            src={imageUrl}
+            src={value}
             alt='Selected image'
             className='w-full h-full object-cover'
             fill
@@ -41,13 +42,13 @@ const ImageParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
         <div className='flex items-center gap-2'>
           <Input
             id='image-url'
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+            value={value}
+            onChange={handleChange}
             placeholder='Enter image URL'
             className='flex-1 border border-gray-300 !text-xs rounded-md px-3 py-0.5 shadow-sm focus:ring-blue-500 focus:border-blue-500'
           />
           <Button
-            onClick={() => setImageUrl('')}
+            onClick={clearImageUrl}
             variant='outline'
             size='sm'
             className='text-xs bg-red-100 text-red-600 border border-red-200 rounded-md hover:bg-red-200'
@@ -55,10 +56,6 @@ const ImageParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
             Clear
           </Button>
         </div>
-        {/* <div className='flex justify-end items-center'>
-          <span className='text-sm text-gray-500'>Add a valid image URL</span>
-          <IconRight className='w-4 h-4 text-blue-500 ml-2' />
-        </div> */}
       </div>
     </div>
   );

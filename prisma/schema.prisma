@@ -56,10 +56,10 @@ model ExecutionPhase {
 }
 
 model Customer {
-  id            String @id @default(cuid())
+  id            String  @id @default(cuid())
   name          String
   phoneNo       String
-  activePhaseId String
+  activePhaseId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

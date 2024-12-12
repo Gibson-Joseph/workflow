@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { TaskParam, TaskParamType, TaskType } from '@/type/task';
+import { TaskParamType, TaskType } from '@/type/task';
 import { TaskRegistry } from '@/lib/workflow/task/registry';
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import { WorkflowTask } from '@/type/workflow';
@@ -67,7 +67,7 @@ export function AddMoreParam({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-72'>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>Content Block</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem
