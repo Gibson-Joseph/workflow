@@ -10,12 +10,11 @@ export const TextMessageTask: WorkflowTask = {
   ),
   isEntryPoint: false,
   credits: 5,
-  inputs: [
+  contant: [
     {
       name: 'Enter text message',
       type: TaskParamType.STRING,
       required: true,
     },
   ],
-  outputs: [],
 };

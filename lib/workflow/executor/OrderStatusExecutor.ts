@@ -1,11 +1,11 @@
 import { MessageData } from '@/lib/helper/meta';
 import prisma from '@/lib/prisma';
-import { InputValue } from '@/type/appNode';
+import { ContantValue } from '@/type/appNode';
 import { ExecutionPhase } from '@prisma/client';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
 export async function OrderStatusExecutor(
-  input: InputValue[],
+  contants: ContantValue[],
   Whatsapp: WhatsappCloudAPI,
   messageData: MessageData,
   phase: ExecutionPhase

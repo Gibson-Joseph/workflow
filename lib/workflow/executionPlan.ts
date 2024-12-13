@@ -23,13 +23,12 @@ export function FlowToExecutionPlan(
   nodes: AppNode[],
   edges: Edge[]
 ): FlowToExecutionPlanType {
-  console.log('nodes --->>>>', JSON.stringify(nodes, null, 4));
-  console.log('edges --->>>>', JSON.stringify(edges, null, 4));
+  // console.log('nodes --->>>>', JSON.stringify(nodes, null, 4));
+  // console.log('edges --->>>>', JSON.stringify(edges, null, 4));
 
   const entrypoint = nodes.find(
     (node) => TaskRegistry[node.data.type].isEntryPoint
   );
-  console.log('entry point -->>>', JSON.stringify(entrypoint, null, 4));
 
   if (!entrypoint) {
     return {
@@ -55,7 +54,6 @@ export function FlowToExecutionPlan(
       nodes: [entrypoint],
     },
   ];
-  console.log('executionPlan', JSON.stringify(executionPlan, null, 4));
 
   planned.add(entrypoint.id);
 
@@ -117,12 +115,12 @@ export function FlowToExecutionPlan(
 
 function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   const invalidInputs = [];
-  const inputs = TaskRegistry[node.data.type].inputs;
+  const contants = TaskRegistry[node.data.type].contant;
 
-  for (const input of inputs) {
+  for (const contant of contants) {
     // const inputValue = node.data.inputs[input.name];
     const inputValue =
-      node.data.inputs.find((nodeInput) => nodeInput.name === input.name)
+      node.data.contant.find((nodeInput) => nodeInput.name === contant.name)
         ?.value || '';
 
     const inputValueProvider = inputValue?.length > 0;
@@ -136,11 +134,11 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
 
     const incomingEdges = edges.filter((edge) => edge.target === node.id);
     const inputLInkedToOutput = incomingEdges.find(
-      (edge) => edge.targetHandle === input.name
+      (edge) => edge.targetHandle === contant.name
     );
 
     const requiredInputProvidedByVisistedOutput =
-      input.required &&
+      contant.required &&
       inputLInkedToOutput &&
       planned.has(inputLInkedToOutput.source);
 
@@ -148,7 +146,7 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
       // thte inputs s required and we have a valid value for it
       // provided by a task that is already planned
       continue;
-    } else if (!input.required) {
+    } else if (!contant.required) {
       // If the input is not required  but there is an output linked to it
       // then we need to be sure that the output is already planned
       if (!inputLInkedToOutput) continue;
@@ -157,9 +155,8 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
         continue;
       }
     }
-    invalidInputs.push(input.name);
+    invalidInputs.push(contant.name);
   }
-  console.log('invalidInputs', invalidInputs);
 
   return invalidInputs;
 }

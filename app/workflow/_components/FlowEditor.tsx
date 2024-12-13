@@ -119,21 +119,20 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
       if (!sourceNode) return;
 
       // Update the source node's inputs
-      const updatedSourceInputs = sourceNode.data.inputs.map((input) => {
-        if (input.name === connection.sourceHandle) {
-          return { ...input, targetNode: connection.target };
+      const updatedSourceInputs = sourceNode.data.contant.map((contant) => {
+        if (contant.name === connection.sourceHandle) {
+          return { ...contant, targetNode: connection.target };
         }
-        return input;
+        return contant;
       });
 
       updateNodeData(sourceNode.id, {
         ...sourceNode.data,
-        inputs: updatedSourceInputs,
+        contant: updatedSourceInputs,
       });
 
       const targetNode = nodes.find((nd) => nd.id === connection.target);
       if (!targetNode) return;
-      console.log('targetNode', targetNode);
 
       updateNodeData(targetNode?.id, {
         ...targetNode?.data,
@@ -143,48 +142,48 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
     [setEdges, updateNodeData, nodes]
   );
 
-  const isValidConnection = useCallback(
-    (connection: Edge | Connection) => {
-      // No- self-connections allowed
-      if (connection.source === connection.target) return false;
+  // const isValidConnection = useCallback(
+  //   (connection: Edge | Connection) => {
+  //     // No- self-connections allowed
+  //     if (connection.source === connection.target) return false;
 
-      // Same taskParam type conection
-      const source = nodes.find((node) => node.id === connection.source);
-      const target = nodes.find((node) => node.id === connection.target);
-      if (!source || !target) return false;
+  //     // Same taskParam type conection
+  //     const source = nodes.find((node) => node.id === connection.source);
+  //     const target = nodes.find((node) => node.id === connection.target);
+  //     if (!source || !target) return false;
 
-      const sourceTask = TaskRegistry[source.data.type];
-      const targetTask = TaskRegistry[target.data.type];
+  //     const sourceTask = TaskRegistry[source.data.type];
+  //     const targetTask = TaskRegistry[target.data.type];
 
-      const output = sourceTask.outputs.find(
-        (o) => o?.name == connection.sourceHandle
-      );
+  //     const output = sourceTask.outputs.find(
+  //       (o) => o?.name == connection.sourceHandle
+  //     );
 
-      const input = targetTask.inputs.find(
-        (i) => i?.name == connection.targetHandle
-      );
+  //     const input = targetTask.inputs.find(
+  //       (i) => i?.name == connection.targetHandle
+  //     );
 
-      if (input?.type !== output?.type) {
-        console.error('invalid connection: type mismatch');
-        return false;
-      }
-      const hasCycle = (node: AppNode, visited = new Set()) => {
-        if (visited.has(node.id)) return false;
+  //     if (input?.type !== output?.type) {
+  //       console.error('invalid connection: type mismatch');
+  //       return false;
+  //     }
+  //     const hasCycle = (node: AppNode, visited = new Set()) => {
+  //       if (visited.has(node.id)) return false;
 
-        visited.add(node.id);
+  //       visited.add(node.id);
 
-        for (const outgoer of getOutgoers(node, nodes, edges)) {
-          if (outgoer.id === connection.source) return true;
-          if (hasCycle(outgoer, visited)) return true;
-        }
-      };
+  //       for (const outgoer of getOutgoers(node, nodes, edges)) {
+  //         if (outgoer.id === connection.source) return true;
+  //         if (hasCycle(outgoer, visited)) return true;
+  //       }
+  //     };
 
-      const detectedCycle = hasCycle(target);
+  //     const detectedCycle = hasCycle(target);
 
-      return !detectedCycle;
-    },
-    [edges, nodes]
-  );
+  //     return !detectedCycle;
+  //   },
+  //   [edges, nodes]
+  // );
 
   return (
     <main className='h-full w-full'>

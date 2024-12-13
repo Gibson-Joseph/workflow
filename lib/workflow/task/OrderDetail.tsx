@@ -8,17 +8,15 @@ export const OrderDetailTask: WorkflowTask = {
   icon: (props) => <ListOrdered className='stroke-red-400' {...props} />,
   isEntryPoint: false,
   credits: 1,
-  inputs: [
+  contant: [
     {
       name: 'Order info',
       type: TaskParamType.ORDER_INFO,
       required: false,
     },
-  ] as const,
-  outputs: [
     {
       name: 'Check status',
       type: TaskParamType.BUTTON,
     },
-  ],
+  ] as const,
 };

@@ -13,8 +13,7 @@ export type WorkflowTask = {
   icon: FC<LucideProps>;
   type: TaskType;
   isEntryPoint?: boolean;
-  inputs: TaskParam[];
-  outputs: TaskParam[];
+  contant: TaskParam[];
   credits: number;
 };
 

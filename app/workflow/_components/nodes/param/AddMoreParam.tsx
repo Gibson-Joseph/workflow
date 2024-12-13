@@ -33,7 +33,7 @@ export function AddMoreParam({
 
     if (!task) console.error(`Task type ${taskType} not found.`);
 
-    const newOutput = {
+    const newContent = {
       value: generateRandomNumber(),
       name: `test`,
       type: taskParamType,
@@ -45,11 +45,10 @@ export function AddMoreParam({
         console.error('Previous state is null. Cannot update outputs.');
         return null; // or initialize with a default WorkflowTask structure
       }
-      console.log('prev', prev);
 
       return {
         ...prev,
-        outputs: [...prev.outputs, newOutput],
+        contant: [...prev.contant, newContent],
       };
     });
 

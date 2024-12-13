@@ -26,16 +26,16 @@ const DeletableEdge = ({ ...props }: EdgeProps) => {
     if (!sourceNode) return; // If no source node found, exit early
 
     // Update the source node's inputs
-    const updatedSourceInputs = sourceNode.data.inputs.map((input) =>
-      input.targetNode === targetNode.id
-        ? { ...input, targetNode: null }
-        : input
+    const updatedSourceInputs = sourceNode.data.contant.map((contant) =>
+      contant.targetNode === targetNode.id
+        ? { ...contant, targetNode: null }
+        : contant
     );
 
     // Update the source node's inputs
     updateNodeData(sourceNode.id, {
       ...sourceNode.data,
-      inputs: updatedSourceInputs,
+      contant: updatedSourceInputs,
     });
 
     // Update the target node's data

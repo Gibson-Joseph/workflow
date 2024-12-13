@@ -1,8 +1,8 @@
-import { InputValue } from '@/type/appNode';
+import { ContantValue } from '@/type/appNode';
 import { TaskParamType } from '@/type/task';
 
 export function generateDynamicJsonStructure(
-  inputData: InputValue[],
+  inputData: ContantValue[],
   sourceNode?: string | null,
   serverData?: any // Pass the server data as an argument
 ) {

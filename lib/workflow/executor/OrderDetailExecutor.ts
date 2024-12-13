@@ -4,12 +4,12 @@ import {
   generateRandomNumber,
 } from '@/lib/helper/phases';
 import prisma from '@/lib/prisma';
-import { InputValue } from '@/type/appNode';
+import { ContantValue } from '@/type/appNode';
 import { ExecutionPhase } from '@prisma/client';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
 export async function OrderDetailExecutor(
-  input: InputValue[],
+  contants: ContantValue[],
   Whatsapp: WhatsappCloudAPI,
   messageData: MessageData,
   phase: ExecutionPhase
@@ -24,7 +24,7 @@ export async function OrderDetailExecutor(
 
   try {
     const formeatedData = generateDynamicJsonStructure(
-      input,
+      contants,
       phase.sourceNode,
       orderRes
     );
