@@ -40,12 +40,11 @@ model WorkflowExecution {
 }
 
 model ExecutionPhase {
-  id      String  @id @default(cuid())
-  userId  String
-  number  Int
-  name    String
-  inputs  String?
-  outputs String?
+  id       String  @id @default(cuid())
+  userId   String
+  number   Int
+  name     String
+  contants String?
 
   nodeId     String
   sourceNode String?

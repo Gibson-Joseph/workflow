@@ -70,7 +70,7 @@ export async function RunWorkflow(form: {
               userId,
               number: phase.phase,
               name: TaskRegistry[node.data.type].label,
-              inputs: JSON.stringify(node.data.inputs),
+              contants: JSON.stringify(node.data.contant),
               nodeType: node.data.type,
               nodeId: node.id,
               sourceNode: node.data.sourceNode,

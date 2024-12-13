@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import WhatsappCloudAPI from 'whatsappcloudapi_wrapper';
 
 import { TaskType } from '@/type/task';
-import { InputValue } from '@/type/appNode';
+import { ContantValue } from '@/type/appNode';
 import { ExecutionRegistry } from '@/lib/workflow/executor/registry';
 import { META_MESSAGE_TYPE } from '@/type/meta';
 import { extractMessageData } from '@/lib/helper/meta';
@@ -73,11 +73,11 @@ export async function FindNode(replyData: any, whatsapp: WhatsappCloudAPI) {
       throw new Error('Could not find the executor');
     }
 
-    if (!phase.inputs) {
-      throw new Error('Phase inputs are missing');
+    if (!phase.contants) {
+      throw new Error('Phase contants are missing');
     }
 
-    const parsedInputs = JSON.parse(phase.inputs) as InputValue[];
+    const parsedInputs = JSON.parse(phase.contants) as ContantValue[];
     const result = await executor(parsedInputs, whatsapp, messageData, phase);
 
     if (customer) {

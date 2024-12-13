@@ -1,7 +1,7 @@
 import { Node } from '@xyflow/react';
 import { TaskParam, TaskParamType, TaskType } from './task';
 
-export interface InputValue {
+export interface ContantValue {
   value: string;
   type: TaskParamType;
   name: string;
@@ -12,7 +12,7 @@ export interface InputValue {
 export interface AppNodeData {
   [key: string]: any;
   // inputs: Record<string, string>[];
-  inputs: InputValue[];
+  contant: ContantValue[];
   type: TaskType;
   sourceNode?: string;
 }

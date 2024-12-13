@@ -1,18 +1,6 @@
 import { ParamProps } from '@/type/appNode';
-import React, { useEffect } from 'react';
-
-const orderInfo = {
-  name: 'orderInfo',
-  label: 'Order Information',
-  dataType: 'object',
-  description: 'Contains details about the order.',
-};
 
 const OrderInfoParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
-  useEffect(() => {
-    // updateNodeParamValue(JSON.stringify(orderInfo), param.type);
-  }, []);
-
   return (
     <div className='p-2 border border-gray-300 rounded bg-gray-50'>
       <p className='text-sm font-medium text-gray-700'>

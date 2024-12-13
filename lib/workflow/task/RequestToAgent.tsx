@@ -8,20 +8,18 @@ export const RequestToAgentTask: WorkflowTask = {
   icon: (props) => <UserPlus className='stroke-yellow-400' {...props} />,
   isEntryPoint: false,
   credits: 1,
-  inputs: [
+  contant: [
     {
       name: 'Message',
       type: TaskParamType.AGENT_PROCESSING,
       value: '',
       required: true,
     },
-  ] as const,
-  outputs: [
     {
       value: 'contact_support',
       name: 'Contact Support',
       type: TaskParamType.BUTTON,
       required: true,
     },
-  ],
+  ] as const,
 };
