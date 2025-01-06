@@ -26,7 +26,7 @@ export async function CreateWorkflow(form: createWorkflowSchemaType) {
     edges: [],
   };
   // Let's add the entry flow entry point
-  initialFlow.nodes.push(CreateFlowNode(TaskType.INITAL_MESSAGE));
+  initialFlow.nodes.push(CreateFlowNode(TaskType.TEXT_BUTTONS));
 
   const result = await prisma.workflow.create({
     data: {

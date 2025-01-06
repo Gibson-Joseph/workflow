@@ -10,12 +10,14 @@ export const RequestToAgentTask: WorkflowTask = {
   credits: 1,
   contant: [
     {
+      id: 1,
       name: 'Message',
       type: TaskParamType.AGENT_PROCESSING,
       value: '',
       required: true,
     },
     {
+      id: 2,
       value: 'contact_support',
       name: 'Contact Support',
       type: TaskParamType.BUTTON,

@@ -2,7 +2,7 @@
 import { TaskParam, TaskParamType } from '@/type/task';
 import React, { useCallback, useMemo } from 'react';
 import StringParam from './param/StringParam';
-import { useReactFlow } from '@xyflow/react';
+import { Node, useReactFlow } from '@xyflow/react';
 import { AppNode } from '@/type/appNode';
 import ButtonParam from './param/ButtonParam';
 import ImageParam from './param/ImageParam';
@@ -19,39 +19,79 @@ const NodeParamField = ({
   nodeId: string;
   disabled: boolean;
 }) => {
-  const { updateNodeData, getNode } = useReactFlow();
+  const { updateNodeData, getNode, getEdges, setEdges, setNodes } =
+    useReactFlow();
   const nodeData = getNode(nodeId) as AppNode;
 
   // const value = node?.data?.inputs?.[param.name];
   const value = useMemo(() => {
     return nodeData.data.contant.find(
-      (nodeContant) => nodeContant.name === param.name
+      (nodeContant) => nodeContant.id === param.id
     );
-  }, [nodeData.data.contant, param.name]);
+  }, [nodeData.data.contant, param.id]);
 
-  const updateNodeParamValue = useCallback(
+  const addNodeParamValue = useCallback(
     (newValue: string, valueType: TaskParamType) => {
-      updateNodeData(nodeId, (node: any) => {
-        const updatedContents = node.data.contant.map((contant: TaskParam) =>
-          contant.name === param.name
-            ? { ...contant, value: newValue, type: valueType }
-            : contant
+      updateNodeData(nodeId, (node: Node) => {
+        const updatedContents = (node as AppNode).data.contant.map(
+          (contant: TaskParam) =>
+            contant.id === param.id
+              ? {
+                  ...contant,
+                  ...(valueType === TaskParamType.BUTTON
+                    ? { name: newValue }
+                    : { value: newValue }),
+                }
+              : contant
         );
 
-        // If the param doesn't exist, add it.
-        const contant = updatedContents.some(
-          (contant: TaskParam) => contant.name === param.name
-        )
-          ? updatedContents
-          : [
-              ...updatedContents,
-              { value: newValue, type: valueType, name: param.name },
-            ];
-
-        return { ...node.data, contant };
+        return { ...node.data, contant: updatedContents };
       });
     },
-    [nodeId, param.name, updateNodeData]
+    [nodeId, param, updateNodeData]
+  );
+
+  const removeNodeParam = useCallback(
+    (contantId: number) => {
+      setNodes((nodes) => {
+        const updatedNodes = nodes.map((node: Node) => {
+          // Update content for the current node
+          if (node.id === nodeId) {
+            const updatedContents = (node as AppNode).data.contant.filter(
+              (contant: TaskParam) => contant.id !== contantId
+            );
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                contant: updatedContents,
+              },
+            };
+          }
+
+          // Remove the reference to the source node for other nodes
+          if (node.data?.sourceNode === nodeId) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                sourceNode: null,
+              },
+            };
+          }
+
+          return node;
+        });
+        return updatedNodes;
+      });
+
+      // Remove edges associated with the node
+      setEdges((edges) => {
+        const filteredEdges = edges.filter((edge) => edge.source !== nodeId);
+        return filteredEdges;
+      });
+    },
+    [nodeId, setEdges, setNodes]
   );
 
   switch (param.type) {
@@ -60,8 +100,9 @@ const NodeParamField = ({
         <StringParam
           param={param}
           value={value?.value || ''}
-          updateNodeParamValue={updateNodeParamValue}
+          addNodeParamValue={addNodeParamValue}
           disabled={disabled}
+          removeNodeParam={removeNodeParam}
         />
       );
     case TaskParamType.BUTTON:
@@ -69,7 +110,8 @@ const NodeParamField = ({
         <ButtonParam
           param={param}
           value={value?.value || ''}
-          updateNodeParamValue={updateNodeParamValue}
+          addNodeParamValue={addNodeParamValue}
+          removeNodeParam={removeNodeParam}
           disabled={disabled}
         />
       );
@@ -78,7 +120,8 @@ const NodeParamField = ({
         <ImageParam
           param={param}
           value={value?.value || ''}
-          updateNodeParamValue={updateNodeParamValue}
+          addNodeParamValue={addNodeParamValue}
+          removeNodeParam={removeNodeParam}
           disabled={disabled}
         />
       );
@@ -87,7 +130,8 @@ const NodeParamField = ({
         <OrderInfoParam
           param={param}
           value={value?.value || ''}
-          updateNodeParamValue={updateNodeParamValue}
+          addNodeParamValue={addNodeParamValue}
+          removeNodeParam={removeNodeParam}
           disabled={disabled}
         />
       );
@@ -96,7 +140,8 @@ const NodeParamField = ({
         <AgentProcessingParam
           param={param}
           value={value?.value || ''}
-          updateNodeParamValue={updateNodeParamValue}
+          addNodeParamValue={addNodeParamValue}
+          removeNodeParam={removeNodeParam}
           disabled={false}
         />
       );
@@ -104,7 +149,8 @@ const NodeParamField = ({
       return (
         <ProcessResponse
           param={param}
-          updateNodeParamValue={updateNodeParamValue}
+          addNodeParamValue={addNodeParamValue}
+          removeNodeParam={removeNodeParam}
           value=''
           disabled={false}
         />

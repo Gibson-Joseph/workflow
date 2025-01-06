@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 
 const AgentProcessingParam = ({
   param,
-  updateNodeParamValue,
+  addNodeParamValue,
   value,
   disabled,
 }: ParamProps) => {
@@ -16,7 +16,7 @@ const AgentProcessingParam = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const newValue = e.target.value;
-    updateNodeParamValue(newValue, param.type);
+    addNodeParamValue(newValue, param.type);
   };
 
   return (

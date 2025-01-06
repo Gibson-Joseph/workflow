@@ -1,5 +1,5 @@
 export enum TaskType {
-  INITAL_MESSAGE = 'INITAL_MESSAGE',
+  TEXT_BUTTONS = 'TEXT_BUTTONS',
   ORDER_DETAIL = 'ORDER_DETAIL',
   AGENT_REQUEST = 'AGENT_REQUEST',
   TEXT_MESSAGE = 'TEXT_MESSAGE',
@@ -21,6 +21,7 @@ export enum TargetParamType {
 }
 
 export interface TaskParam {
+  id: number;
   name: string;
   type: TaskParamType;
   helperText?: string;

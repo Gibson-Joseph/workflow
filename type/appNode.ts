@@ -2,17 +2,18 @@ import { Node } from '@xyflow/react';
 import { TaskParam, TaskParamType, TaskType } from './task';
 
 export interface ContantValue {
+  id: number;
   value: string;
   type: TaskParamType;
   name: string;
-  // [key: string]: string;
   targetNode?: string;
+  // [key: string]: string;
 }
 
 export interface AppNodeData {
   [key: string]: any;
   // inputs: Record<string, string>[];
-  contant: ContantValue[];
+  contant: TaskParam[];
   type: TaskType;
   sourceNode?: string;
 }
@@ -24,8 +25,9 @@ export interface AppNode extends Node {
 export interface ParamProps {
   param: TaskParam;
   value: string;
-  updateNodeParamValue: (nodeValue: string, type: TaskParamType) => void;
   disabled?: boolean;
+  removeNodeParam: (contantId: number) => void;
+  addNodeParamValue: (nodeValue: string, type: TaskParamType) => void;
 }
 
 export type AppNodeMissingInputs = {

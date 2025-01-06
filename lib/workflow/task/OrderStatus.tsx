@@ -10,6 +10,7 @@ export const OrderStausTask: WorkflowTask = {
   credits: 1,
   contant: [
     {
+      id: 1,
       name: 'Order Staus',
       type: TaskParamType.PROCESS_RESPONSE,
       required: false,

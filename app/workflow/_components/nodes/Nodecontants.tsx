@@ -22,12 +22,13 @@ export const Nodecontant = ({
   const { invalidInputs } = useFlowvalidation();
   const edges = useEdges();
   const isConnected = edges.some(
-    (edge) => edge.target === nodeId && edge.targetHandle === contant.name
+    (edge) =>
+      edge.target === nodeId && edge.targetHandle === contant.id.toString()
   );
 
   const hasErrors = invalidInputs
     .find((node) => node.nodeId === nodeId)
-    ?.inputs.find((invalidInput) => invalidInput === contant.name);
+    ?.inputs.find((invalidInput) => invalidInput === contant.id.toString());
 
   return (
     <div
@@ -38,7 +39,7 @@ export const Nodecontant = ({
     >
       {!contant.hideHandle && [TaskParamType.BUTTON].includes(contant.type) && (
         <Handle
-          id={contant.name}
+          id={contant.id.toString()}
           type='source'
           position={Position.Right}
           className={cn(
@@ -59,7 +60,7 @@ export const Nodecontant = ({
         ].includes(contant.type) && (
           <Handle
             isConnectable={!isConnected}
-            id={contant.name}
+            id={contant.id.toString()}
             type='target'
             position={Position.Left}
             className={cn(

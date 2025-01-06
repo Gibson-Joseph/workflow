@@ -1,5 +1,6 @@
 import { AppNode } from '@/type/appNode';
 import { TaskType } from '@/type/task';
+import { TaskRegistry } from './task/registry';
 
 export function CreateFlowNode(
   nodeType: TaskType,
@@ -14,7 +15,7 @@ export function CreateFlowNode(
     dragHandle: '.drag-handle',
     data: {
       type: nodeType,
-      contant: [],
+      contant: TaskRegistry[nodeType].contant,
     },
     position: position ?? { x: 0, y: 0 },
   };

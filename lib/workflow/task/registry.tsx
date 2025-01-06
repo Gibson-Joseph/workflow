@@ -11,7 +11,7 @@ type Registry = {
 };
 
 export const TaskRegistry: Record<TaskType, WorkflowTask> = {
-  INITAL_MESSAGE: InitlaMessageTask,
+  TEXT_BUTTONS: InitlaMessageTask,
   ORDER_DETAIL: OrderDetailTask,
   AGENT_REQUEST: RequestToAgentTask,
   TEXT_MESSAGE: TextMessageTask,
