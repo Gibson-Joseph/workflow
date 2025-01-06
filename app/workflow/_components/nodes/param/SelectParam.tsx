@@ -17,7 +17,7 @@ type OptionType = {
   value: string;
 };
 
-const SelectParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
+const SelectParam = ({ param, addNodeParamValue, value }: ParamProps) => {
   const id = useId();
   return (
     <div className='flex flex-col gap-1 w-full'>
@@ -26,7 +26,7 @@ const SelectParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
         {param.required && <p className='text-red-400 px-2'>*</p>}
       </Label>
       <Select
-        onValueChange={(value) => updateNodeParamValue(value, param.type)}
+        onValueChange={(value) => addNodeParamValue(value, param.type)}
         value={value}
       >
         <SelectTrigger className='w-full'>

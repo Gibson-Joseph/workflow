@@ -1,23 +1,24 @@
 'use client';
+import React, { useId, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ParamProps } from '@/type/appNode';
-import React, { useId } from 'react';
 
 const StringParam = ({
-  param,
-  updateNodeParamValue,
   value,
+  param,
   disabled,
+  addNodeParamValue,
 }: ParamProps) => {
   const id = useId();
+  const [internelValue, setInternelValue] = useState(value);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const newValue = e.target.value;
-    updateNodeParamValue(newValue, param.type);
+    addNodeParamValue(newValue, param.type);
   };
 
   let Component: any = Input;
@@ -33,12 +34,15 @@ const StringParam = ({
       </Label>
       <Component
         id={id}
+        value={internelValue}
+        onBlur={handleChange}
+        onChange={(e: any) => setInternelValue(e.target.value)}
         disabled={disabled}
-        value={value}
-        onChange={handleChange}
-        placeholder='Enter value here'
-        // onBlur={(e: any) => updateNodeParamValue(e.target.value, param.type)}
-        className='text-xs'
+        className={`text-xs border ${
+          !internelValue &&
+          'border-red-500 focus-visible:border-transparent focus-visible:ring-red-500'
+        } `}
+        placeholder='Enter a value here'
       />
       {param.helperText && (
         <p className='text-muted-foreground px-2'>{param.helperText}</p>

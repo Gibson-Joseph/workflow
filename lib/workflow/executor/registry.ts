@@ -21,7 +21,7 @@ type RegistryType = {
 };
 
 export const ExecutionRegistry: RegistryType = {
-  INITAL_MESSAGE: InitialMessageExecutor,
+  TEXT_BUTTONS: InitialMessageExecutor,
   ORDER_DETAIL: OrderDetailExecutor,
   AGENT_REQUEST: RequestToAgentExecutor,
   TEXT_MESSAGE: TextMessageExecutor,

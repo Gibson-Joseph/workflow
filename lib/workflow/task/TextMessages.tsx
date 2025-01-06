@@ -12,6 +12,7 @@ export const TextMessageTask: WorkflowTask = {
   credits: 5,
   contant: [
     {
+      id: 1,
       name: 'Enter text message',
       type: TaskParamType.STRING,
       required: true,

@@ -3,14 +3,14 @@ import { Input } from '@/components/ui/input';
 import { ParamProps } from '@/type/appNode';
 import Image from 'next/image';
 
-const ImageParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
+const ImageParam = ({ param, addNodeParamValue, value }: ParamProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    updateNodeParamValue(newValue, param.type);
+    addNodeParamValue(newValue, param.type);
   };
 
   const clearImageUrl = () => {
-    updateNodeParamValue('', param.type);
+    addNodeParamValue('', param.type);
   };
 
   return (

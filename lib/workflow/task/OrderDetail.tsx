@@ -10,11 +10,13 @@ export const OrderDetailTask: WorkflowTask = {
   credits: 1,
   contant: [
     {
+      id: 1,
       name: 'Order info',
       type: TaskParamType.ORDER_INFO,
       required: false,
     },
     {
+      id: 2,
       name: 'Check status',
       type: TaskParamType.BUTTON,
     },

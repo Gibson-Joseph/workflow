@@ -120,7 +120,7 @@ function getInvalidInputs(node: AppNode, edges: Edge[], planned: Set<string>) {
   for (const contant of contants) {
     // const inputValue = node.data.inputs[input.name];
     const inputValue =
-      node.data.contant.find((nodeInput) => nodeInput.name === contant.name)
+      node.data.contant.find((nodeInput) => nodeInput.id === contant.id)
         ?.value || '';
 
     const inputValueProvider = inputValue?.length > 0;

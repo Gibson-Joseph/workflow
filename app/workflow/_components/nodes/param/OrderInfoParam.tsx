@@ -1,6 +1,6 @@
 import { ParamProps } from '@/type/appNode';
 
-const OrderInfoParam = ({ param, updateNodeParamValue, value }: ParamProps) => {
+const OrderInfoParam = ({ param }: ParamProps) => {
   return (
     <div className='p-2 border border-gray-300 rounded bg-gray-50'>
       <p className='text-sm font-medium text-gray-700'>

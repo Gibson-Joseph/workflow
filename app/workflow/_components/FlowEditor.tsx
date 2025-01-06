@@ -120,7 +120,7 @@ const FlowEditor = ({ workflow }: FlowEditorProps) => {
 
       // Update the source node's inputs
       const updatedSourceInputs = sourceNode.data.contant.map((contant) => {
-        if (contant.name === connection.sourceHandle) {
+        if (contant.id.toString() === connection.sourceHandle) {
           return { ...contant, targetNode: connection.target };
         }
         return contant;
